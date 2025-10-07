@@ -61,3 +61,65 @@ export const getCancellationPolicy = async () => {
     throw new Error(error.response?.data?.message || 'Failed to fetch policy');
   }
 };
+
+
+
+/**
+ * Fetches all blog posts from the backend.
+ * @returns {Promise<Array>} A promise that resolves to an array of blog posts.
+ */
+export const getAllBlogs = async () => {
+  try {
+    const response = await api.get('/blogs');
+    return response.data.data;
+  } catch (error) {
+    console.error('Error fetching blogs:', error);
+    throw new Error(error.response?.data?.message || 'Failed to fetch blogs');
+  }
+};
+
+/**
+ * Fetches a single blog post by its ID from the backend.
+ * @param {string} blogId - The ID of the blog post to fetch.
+ * @returns {Promise<Object>} A promise that resolves to the blog post object.
+ */
+export const getBlogById = async (blogId) => {
+  try {
+    const response = await api.get(`/blogs/${blogId}`);
+    return response.data.data;
+  } catch (error) {
+    console.error(`Error fetching blog post with ID ${blogId}:`, error);
+    throw new Error(error.response?.data?.message || 'Failed to fetch blog post');
+  }
+};
+
+/**
+ * Fetches all podcasts from the backend.
+ * @returns {Promise<Array>} A promise that resolves to an array of podcasts.
+ */
+export const getAllPodcasts = async () => {
+  try {
+    // Endpoint is /podcasts based on your backend controller
+    const response = await api.get('/podcasts');
+    return response.data.data;
+  } catch (error)
+ {
+    console.error('Error fetching podcasts:', error);
+    throw new Error(error.response?.data?.message || 'Failed to fetch podcasts');
+  }
+};
+
+/**
+ * Fetches a single podcast by its ID from the backend.
+ * @param {string} podcastId - The ID of the podcast to fetch.
+ * @returns {Promise<Object>} A promise that resolves to the podcast object.
+ */
+export const getPodcastById = async (podcastId) => {
+  try {
+    const response = await api.get(`/podcasts/${podcastId}`);
+    return response.data.data;
+  } catch (error) {
+    console.error(`Error fetching podcast with ID ${podcastId}:`, error);
+    throw new Error(error.response?.data?.message || 'Failed to fetch podcast');
+  }
+};

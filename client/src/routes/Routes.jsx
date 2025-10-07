@@ -14,6 +14,7 @@ import Contact from '../user/pages/Contact';
 import PackageDetails from '../user/pages/PackageDetails';
 import{ BlogPost } from '../user/pages/BlogPost';
 import CancellationPolicy from '../user/pages/CancellationPolicy';
+import { PodcastPage } from '../user/pages/PodcastPage';
 
 export function AppRoutes() {
   const location = useLocation();
@@ -31,6 +32,7 @@ export function AppRoutes() {
       <Route path="/contact" element={<Contact />} />
       <Route path="/package-details" element={<PackageDetails />} />
       <Route path="/blog/:postId" element={<BlogPost />} />
+      <Route path="/podcast/:podcastId" element={<PodcastPage />} />
       <Route path="/cancellation-policy" element={<CancellationPolicy />} />
     </Routes>
   );
