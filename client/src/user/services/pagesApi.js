@@ -43,3 +43,21 @@ export const getContactPageContent = async () => {
   }
 };
 
+
+
+/**
+ * Fetches the cancellation policy from the backend.
+ * @returns {Promise<Object>} A promise that resolves to the cancellation policy data.
+ */
+export const getCancellationPolicy = async () => {
+  try {
+    // The endpoint is /cancellation-policy based on your backend routes.
+    const response = await api.get('/cancellation-policy');
+    // The policy content is in response.data.data.policy
+    return response.data.data;
+  } catch (error) {
+    // Log the error and re-throw it to be handled by React Query.
+    console.error('Error fetching cancellation policy:', error);
+    throw new Error(error.response?.data?.message || 'Failed to fetch policy');
+  }
+};
