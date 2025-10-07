@@ -5,144 +5,14 @@ import { MapPin, Sparkles, Plane, Users, Shield, Star, Heart } from "lucide-reac
 import PackageCard from "../components/packageCard";
 import InfoCard from "../components/infoCard";
 import heroWomen from "../../assets/group_image.webp";
-
-// Sample women travel packages data
-const womenTravelPackages = [
-  // Domestic packages
-  {
-    id: 'wd-1',
-    title: 'Rajasthan Queens Heritage Tour',
-    description: 'Experience the royal heritage of Rajasthan with an exclusive women-only group. Explore majestic palaces, vibrant markets, and immerse yourself in cultural workshops led by local female artisans.',
-    placesCovered: 'Jaipur - Udaipur - Jodhpur',
-    duration: '7 Days 6 Nights',
-    bestTimeToVisit: 'October to March',
-    peakSeason: 'November to February',
-    midSeason: 'October & March',
-    startingFrom: '35999',
-    thumbnail: '/placeholder.svg',
-    itinerariesDay1: 'Arrival in Jaipur, welcome ceremony with female guides, check-in to heritage hotel, evening cultural workshop and traditional Rajasthani dinner',
-    type: 'Women Only',
-    highlights: ['Women-only group', 'Female guides', 'Safe accommodations', 'Cultural workshops'],
-    rating: 4.9,
-    safety: 'Maximum Safety',
-    groupSize: '8-12 women',
-    category: 'domestic',
-    inclusions: ['Accommodation', 'All meals', 'Transportation', 'Female guide'],
-    exclusions: ['Personal expenses', 'Travel insurance']
-  },
-  {
-    id: 'wd-2',
-    title: 'Kerala Wellness Retreat',
-    description: 'Rejuvenate your mind, body, and soul in the serene landscapes of Kerala. Enjoy Ayurvedic treatments, yoga sessions, and cooking classes in a safe, women-friendly environment.',
-    placesCovered: 'Munnar - Alleppey - Kochi',
-    duration: '6 Days 5 Nights',
-    bestTimeToVisit: 'September to March',
-    peakSeason: 'October to February',
-    midSeason: 'September & March',
-    startingFrom: '42999',
-    thumbnail: '/placeholder.svg',
-    itinerariesDay1: 'Arrival in Kochi, transfer to wellness resort, Ayurvedic consultation, evening yoga session by the backwaters, organic dinner',
-    type: 'Women Only',
-    highlights: ['Ayurveda treatments', 'Yoga sessions', 'Cooking classes', 'Nature walks'],
-    rating: 4.8,
-    safety: 'Women-Friendly',
-    groupSize: '6-10 women',
-    category: 'domestic',
-    inclusions: ['Resort stays', 'Spa treatments', 'All meals', 'Yoga sessions'],
-    exclusions: ['Personal shopping', 'Travel insurance']
-  },
-  {
-    id: 'wd-3',
-    title: 'Himachal Adventure for Women',
-    description: 'Challenge yourself with mountain adventures in the stunning Himalayas. Trek through scenic trails, enjoy bonfire evenings, and capture breathtaking moments in this empowering women-only expedition.',
-    placesCovered: 'Manali - Dharamshala - Dalhousie',
-    duration: '8 Days 7 Nights',
-    bestTimeToVisit: 'March to June, September to November',
-    peakSeason: 'April to June',
-    midSeason: 'March & September to November',
-    startingFrom: '38999',
-    thumbnail: '/placeholder.svg',
-    itinerariesDay1: 'Arrival in Manali, acclimatization walk, meet fellow adventurers, safety briefing by female trek leader, dinner and bonfire',
-    type: 'Women Only',
-    highlights: ['Mountain trekking', 'Adventure activities', 'Bonfire evenings', 'Photography workshops'],
-    rating: 4.7,
-    safety: 'Adventure Safe',
-    groupSize: '10-15 women',
-    category: 'domestic',
-    inclusions: ['Mountain lodges', 'Adventure gear', 'All meals', 'Guide'],
-    exclusions: ['Personal equipment', 'Travel insurance']
-  },
-  // International packages
-  {
-    id: 'wi-1',
-    title: 'Bali Sisterhood Retreat',
-    description: 'Discover the magic of Bali with a sisterhood of travelers. Enjoy beach yoga, cultural immersion, spa treatments, and create unforgettable memories in this tropical paradise.',
-    placesCovered: 'Ubud - Seminyak - Canggu, Bali',
-    duration: '7 Days 6 Nights',
-    bestTimeToVisit: 'April to October',
-    peakSeason: 'July to August',
-    midSeason: 'April to June, September to October',
-    startingFrom: '95999',
-    thumbnail: '/placeholder.svg',
-    itinerariesDay1: 'Arrival in Bali, airport transfer to beachfront resort, welcome beach yoga session, group introduction dinner, evening spa treatment',
-    type: 'Women Only',
-    highlights: ['Beach yoga sessions', 'Cultural immersion', 'Spa treatments', 'Female-only activities'],
-    rating: 4.9,
-    safety: 'Ultra Safe',
-    groupSize: '8-12 women',
-    category: 'international',
-    inclusions: ['Flights', 'Visa support', 'Beach resorts', 'Spa treatments'],
-    exclusions: ['Personal expenses', 'Travel insurance', 'Optional activities']
-  },
-  {
-    id: 'wi-2',
-    title: 'Dubai Ladies Special',
-    description: 'Experience luxury and adventure in Dubai with an exclusive ladies-only tour. Shop at premium malls, enjoy desert safaris, indulge in spa treatments, and savor high tea at iconic venues.',
-    placesCovered: 'Dubai, UAE',
-    duration: '5 Days 4 Nights',
-    bestTimeToVisit: 'November to March',
-    peakSeason: 'December to February',
-    midSeason: 'November & March',
-    startingFrom: '89999',
-    thumbnail: '/placeholder.svg',
-    itinerariesDay1: 'Arrival in Dubai, luxury hotel check-in, ladies-only shopping tour at Dubai Mall, evening at Burj Khalifa, high tea at Atlantis',
-    type: 'Women Only',
-    highlights: ['Ladies-only shopping tours', 'Desert safari', 'Luxury spa day', 'High tea experiences'],
-    rating: 4.8,
-    safety: 'Maximum Safety',
-    groupSize: '10-15 women',
-    category: 'international',
-    inclusions: ['Flights', 'Luxury hotels', 'All meals', 'Shopping tours'],
-    exclusions: ['Personal shopping', 'Optional activities', 'Travel insurance']
-  },
-  {
-    id: 'wi-3',
-    title: 'Thailand Girls Trip',
-    description: 'Join fellow women travelers for an exciting adventure in Thailand. Island hop through stunning beaches, learn Thai cooking, enjoy massage workshops, and relax in paradise.',
-    placesCovered: 'Bangkok - Phuket - Phi Phi Islands',
-    duration: '8 Days 7 Nights',
-    bestTimeToVisit: 'November to April',
-    peakSeason: 'December to February',
-    midSeason: 'November & March to April',
-    startingFrom: '115999',
-    thumbnail: '/placeholder.svg',
-    itinerariesDay1: 'Arrival in Bangkok, temple tours with female guide, visit Wat Pho and Wat Arun, Thai cooking class, evening river cruise',
-    type: 'Women Only',
-    highlights: ['Island hopping', 'Thai cooking classes', 'Massage workshops', 'Beach relaxation'],
-    rating: 4.7,
-    safety: 'Women-Friendly',
-    groupSize: '12-18 women',
-    category: 'international',
-    inclusions: ['Flights', 'Hotels', 'Island tours', 'Cooking classes'],
-    exclusions: ['Personal expenses', 'Optional activities', 'Travel insurance']
-  }
-];
+import { useWomenOnlyPackages } from "../hooks/usePackages";
 
 export default function Women() {
   const [selectedType, setSelectedType] = useState('domestic');
   const packagesRef = useRef(null);
   
-  // Handle tab change with scroll
+  const { data: womenTravelPackages, isLoading, isError } = useWomenOnlyPackages();
+  
   const handleTabChange = (type) => {
     setSelectedType(type);
     setTimeout(() => {
@@ -155,11 +25,10 @@ export default function Women() {
     }, 100);
   };
   
-  const filteredPackages = womenTravelPackages.filter(pkg => pkg.category === selectedType);
+  const filteredPackages = womenTravelPackages?.filter(pkg => pkg.tag === selectedType);
   
   return (
     <div className="w-full min-h-screen -mt-16 bg-gradient-to-br from-pink-200 via-pink-300 to-pink-400">
-      {/* Hero Section */}
       <section className="relative h-screen w-full flex items-center justify-center overflow-hidden">
         <div 
           className="absolute inset-0 z-0"
@@ -212,7 +81,6 @@ export default function Women() {
               with fellow female travelers.
             </motion.p>
             
-            {/* Package Type Selection */}
             <motion.div
               className="flex flex-col sm:flex-row gap-3 sm:gap-4 justify-center items-center pt-6 px-4"
               initial={{ opacity: 0, y: 20 }}
@@ -258,7 +126,6 @@ export default function Women() {
         </div>
       </section>
 
-      {/* Women Travel Packages */}
       <section ref={packagesRef} className="py-16 px-4 bg-pink-100">
         <div className="max-w-7xl mx-auto">
           <motion.div
@@ -277,9 +144,12 @@ export default function Women() {
           </motion.div>
 
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-            {filteredPackages.map((pkg, index) => (
+            {isLoading && <p className="col-span-full text-center">Loading packages...</p>}
+            {isError && <p className="col-span-full text-center text-red-600">Could not fetch packages.</p>}
+            
+            {filteredPackages && filteredPackages.map((pkg, index) => (
               <motion.div
-                key={pkg.id}
+                key={pkg._id}
                 initial={{ opacity: 0, y: 30 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ delay: 0.1 * index }}
@@ -295,7 +165,6 @@ export default function Women() {
         </div>
       </section>
 
-      {/* Why Choose Women-Only Travel */}
       <section className="py-20 px-4 bg-pink-50">
         <div className="max-w-6xl mx-auto">
           <motion.div 
@@ -349,7 +218,6 @@ export default function Women() {
         </div>
       </section>
 
-      {/* Safety Features */}
       <section className="py-20 px-4 bg-pink-100">
         <div className="max-w-6xl mx-auto">
           <motion.div 
@@ -397,7 +265,6 @@ export default function Women() {
         </div>
       </section>
 
-      {/* Testimonials */}
       <section className="py-20 px-4 bg-pink-50">
         <div className="max-w-6xl mx-auto">
           <motion.div
@@ -450,7 +317,6 @@ export default function Women() {
         </div>
       </section>
 
-      {/* CTA Section */}
       <section className="py-20 px-4 bg-pink-50">
         <div className="max-w-4xl mx-auto text-center">
           <motion.div

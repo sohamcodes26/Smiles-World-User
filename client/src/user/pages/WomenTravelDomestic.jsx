@@ -6,53 +6,14 @@ import { Footer } from "../components/footer";
 import PackageCard from "../components/packageCard";
 import InfoCard from "../components/infoCard";
 import heroWomen from "../../assets/group_image.webp";
-
-// Sample domestic women travel packages
-const domesticWomenPackages = [
-  {
-    id: 'wd-1',
-    title: 'Rajasthan Queens Heritage Tour',
-    destination: 'Jaipur - Udaipur - Jodhpur',
-    duration: '7 Days 6 Nights',
-    price: '₹35,999',
-    image: '/placeholder.svg',
-    highlights: ['Women-only group', 'Female guides', 'Safe accommodations', 'Cultural workshops'],
-    rating: 4.9,
-    safety: 'Maximum Safety',
-    groupSize: '8-12 women'
-  },
-  {
-    id: 'wd-2',
-    title: 'Kerala Wellness Retreat',
-    destination: 'Munnar - Alleppey - Kochi',
-    duration: '6 Days 5 Nights',
-    price: '₹42,999',
-    image: '/placeholder.svg',
-    highlights: ['Ayurveda treatments', 'Yoga sessions', 'Cooking classes', 'Nature walks'],
-    rating: 4.8,
-    safety: 'Women-Friendly',
-    groupSize: '6-10 women'
-  },
-  {
-    id: 'wd-3',
-    title: 'Himachal Adventure for Women',
-    destination: 'Manali - Dharamshala - Dalhousie',
-    duration: '8 Days 7 Nights',
-    price: '₹38,999',
-    image: '/placeholder.svg',
-    highlights: ['Mountain trekking', 'Adventure activities', 'Bonfire evenings', 'Photography workshops'],
-    rating: 4.7,
-    safety: 'Adventure Safe',
-    groupSize: '10-15 women'
-  }
-];
+import { useWomenOnlyPackages } from "../hooks/usePackages";
 
 export default function WomenTravelDomestic() {
+  const { data: domesticWomenPackages, isLoading, isError } = useWomenOnlyPackages({ tag: 'domestic' });
+
   return (
     <>
-      {/* Hero Section */}
       <section className="relative min-h-screen flex items-center justify-center overflow-hidden">
-        {/* Navbar with absolute positioning */}
         <div className="absolute top-0 left-0 right-0 z-50 bg-transparent">
           <div className="bg-gradient-to-b from-black/40 to-transparent backdrop-blur-sm">
             <Navbar />
@@ -115,32 +76,21 @@ export default function WomenTravelDomestic() {
         </div>
       </section>
 
-      {/* Domestic Women Tours */}
       <section className="py-16 px-4">
         <div className="max-w-7xl mx-auto">
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-            {domesticWomenPackages.map((pkg, index) => (
+            {isLoading && <p className="col-span-full text-center">Loading packages...</p>}
+            {isError && <p className="col-span-full text-center text-red-600">Could not fetch packages.</p>}
+            
+            {domesticWomenPackages && domesticWomenPackages.map((pkg, index) => (
               <motion.div
-                key={pkg.id}
+                key={pkg._id}
                 initial={{ opacity: 0, y: 30 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ delay: 0.1 * index }}
               >
                 <PackageCard
-                  packageData={{
-                    id: pkg.id,
-                    title: pkg.title,
-                    description: `${pkg.duration} women-only travel experience. ${pkg.highlights.join(', ')}.`,
-                    duration: pkg.duration,
-                    placesCovered: pkg.destination,
-                    startingFrom: pkg.price,
-                    type: 'Women Only',
-                    thumbnail: pkg.image,
-                    rating: pkg.rating,
-                    highlights: pkg.highlights,
-                    safety: pkg.safety,
-                    groupSize: pkg.groupSize
-                  }}
+                  packageData={pkg}
                   theme="pink"
                   delay={0.1 * index}
                 />
@@ -150,7 +100,6 @@ export default function WomenTravelDomestic() {
         </div>
       </section>
 
-      {/* Safety Features */}
       <section className="py-16 px-4 bg-pink-50/50">
         <div className="max-w-6xl mx-auto">
           <motion.div
@@ -212,7 +161,6 @@ export default function WomenTravelDomestic() {
         </div>
       </section>
 
-      {/* Testimonials */}
       <section className="py-16 px-4">
         <div className="max-w-6xl mx-auto">
           <motion.div

@@ -111,10 +111,43 @@ const getGroupDeparturePackages = async (tag = null) => {
   return packages;
 };
 
+
+// --- NEW FUNCTION: Get Domestic Packages ---
+/**
+ * Get domestic packages
+ * @returns {Promise<Array>} - Array of domestic packages
+ */
+const getDomesticPackages = async () => {
+  const packages = await Package.find({ tag: 'domestic' })
+    .select('-__v')
+    .sort({ createdAt: -1 })
+    .lean();
+
+  return packages;
+};
+
+// --- NEW FUNCTION: Get International Packages ---
+/**
+ * Get international packages
+ * @returns {Promise<Array>} - Array of international packages
+ */
+const getInternationalPackages = async () => {
+  const packages = await Package.find({ tag: 'international' })
+    .select('-__v')
+    .sort({ createdAt: -1 })
+    .lean();
+
+  return packages;
+};
+
+
 module.exports = {
   getAllPackages,
   getPackageById,
   getFeaturedPackages,
   getWomenOnlyPackages,
   getGroupDeparturePackages,
+  // --- EXPORT NEW FUNCTIONS ---
+  getDomesticPackages,
+  getInternationalPackages,
 };

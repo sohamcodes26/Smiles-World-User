@@ -31,6 +31,9 @@ export default function About() {
             mission: {
                 text: "To make travel accessible, safe, and joyful for everyone, especially empowering women to explore the world with confidence.",
             },
+            profilePhoto: {
+                imageUrl: ''
+            }
         },
         ourMembers: {
             cards: [
@@ -50,21 +53,17 @@ export default function About() {
     };
 
     const content = !isError && aboutData ? aboutData : fallbackData;
-    
+    const profileImageUrl = content.storyAndMission?.profilePhoto?.imageUrl;
     const journeyStats = [
         { label: "Happy Travelers" },
         { label: "Destinations" },
         { label: "Successful Trips" },
         { label: "Satisfaction Rate" },
     ];
-    
-    // Hardcoded icons for team members as a fallback
     const memberIcons = ["🧭", "🌸", "🎭"];
 
     return (
         <div className="bg-[#dcf0ff] -mt-16">
-            
-            {/* Hero Section */}
             <section className="pt-32 pb-20 px-4">
                 <div className="max-w-6xl mx-auto text-center">
                     <motion.div
@@ -82,7 +81,6 @@ export default function About() {
                 </div>
             </section>
 
-            {/* Founder's Story Section */}
             <section className="py-16 px-4">
                 <div className="max-w-6xl mx-auto">
                     <div className="grid grid-cols-1 lg:grid-cols-5 gap-16 items-center">
@@ -93,13 +91,27 @@ export default function About() {
                             className="lg:col-span-2"
                         >
                             <div className="aspect-square bg-gradient-to-br from-violet-400 to-purple-500 rounded-3xl shadow-lg shadow-purple-500/20 flex flex-col items-center justify-center text-center p-8">
-                                <User className="w-24 h-24 text-purple-800/50" strokeWidth={1} />
-                                <p className="mt-4 text-xl font-medium text-purple-900">
-                                    Shweta Undre
-                                </p>
-                                <p className="text-sm text-purple-800/80">
-                                    Founder, Smiles World
-                                </p>
+                                
+                                {/* --- FIX: WRAPPED IN A REACT FRAGMENT --- */}
+                                <>
+                                    {profileImageUrl ? (
+                                        <img 
+                                            src={profileImageUrl} 
+                                            alt="Shweta Undre, Founder" 
+                                            className="w-100 h-70 object-cover rounded-xl border-4 border-white shadow-lg"
+                                        />
+                                    ) : (
+                                        <User className="w-28 h-28 text-purple-800/50" strokeWidth={1} />
+                                    )}
+
+                                    <p className="mt-4 text-xl font-medium text-purple-900">
+                                        Shweta Undre
+                                    </p>
+                                    <p className="text-sm text-purple-800/80">
+                                        Founder, Smiles World
+                                    </p>
+                                </>
+                                {/* --- END OF FIX --- */}
                             </div>
                         </motion.div>
 
@@ -122,10 +134,8 @@ export default function About() {
                 </div>
             </section>
 
-            {/* Mission & Values Section */}
             <section className="py-20 px-4">
                 <div className="max-w-7xl mx-auto">
-                    {/* Mission */}
                     <motion.div
                         initial={{ opacity: 0, y: 30 }}
                         whileInView={{ opacity: 1, y: 0 }}
@@ -145,7 +155,6 @@ export default function About() {
                         </div>
                     </motion.div>
 
-                    {/* Values */}
                     <motion.div
                         className="text-center mb-16"
                         initial={{ opacity: 0, y: 20 }}
@@ -174,7 +183,6 @@ export default function About() {
                 </div>
             </section>
 
-            {/* Team Section */}
             <section className="py-20 px-4">
                 <div className="max-w-6xl mx-auto">
                     <motion.div
@@ -199,7 +207,6 @@ export default function About() {
                                     member.imageUrl ? (
                                         <img src={member.imageUrl} alt={member.name} className="w-20 h-20 object-cover rounded-full mx-auto" />
                                     ) : (
-                                        // Fallback to emoji if imageUrl is not available
                                         memberIcons[index] || "👤"
                                     )
                                 }
@@ -218,7 +225,6 @@ export default function About() {
                 </div>
             </section>
 
-            {/* Stats Section */}
             <section className="py-20 px-4">
                 <div className="max-w-6xl mx-auto">
                     <motion.div

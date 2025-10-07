@@ -100,10 +100,49 @@ const getGroupDeparturePackages = asyncHandler(async (req, res) => {
   );
 });
 
+
+// --- NEW CONTROLLER: Get Domestic Packages ---
+/**
+ * @route   GET /api/packages/domestic
+ * @desc    Get all domestic packages
+ * @access  Public
+ */
+const getDomesticPackages = asyncHandler(async (req, res) => {
+  const packages = await packagesService.getDomesticPackages();
+
+  return successResponse(
+    res,
+    packages,
+    `Retrieved ${packages.length} domestic package(s) successfully`,
+    200
+  );
+});
+
+// --- NEW CONTROLLER: Get International Packages ---
+/**
+ * @route   GET /api/packages/international
+ * @desc    Get all international packages
+ * @access  Public
+ */
+const getInternationalPackages = asyncHandler(async (req, res) => {
+  const packages = await packagesService.getInternationalPackages();
+
+  return successResponse(
+    res,
+    packages,
+    `Retrieved ${packages.length} international package(s) successfully`,
+    200
+  );
+});
+
+
 module.exports = {
   getAllPackages,
   getPackageById,
   getFeaturedPackages,
   getWomenOnlyPackages,
   getGroupDeparturePackages,
+  // --- EXPORT NEW CONTROLLERS ---
+  getDomesticPackages,
+  getInternationalPackages,
 };

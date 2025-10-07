@@ -6,69 +6,14 @@ import { Footer } from "../components/footer";
 import PackageCard from "../components/packageCard";
 import InfoCard from "../components/infoCard";
 import heroWomen from "../../assets/group_image.webp";
-
-// Sample international women travel packages
-const internationalWomenPackages = [
-  {
-    id: 'wi-1',
-    title: 'Bali Sisterhood Retreat',
-    destination: 'Bali, Indonesia',
-    duration: '7 Days 6 Nights',
-    price: '₹95,999',
-    image: '/placeholder.svg',
-    highlights: ['Beach yoga sessions', 'Cultural immersion', 'Spa treatments', 'Female-only activities'],
-    rating: 4.9,
-    safety: 'Ultra Safe',
-    groupSize: '8-12 women',
-    includes: ['Flights', 'Visa support', 'Insurance']
-  },
-  {
-    id: 'wi-2',
-    title: 'Dubai Ladies Special',
-    destination: 'Dubai, UAE',
-    duration: '5 Days 4 Nights',
-    price: '₹89,999',
-    image: '/placeholder.svg',
-    highlights: ['Ladies-only shopping tours', 'Desert safari', 'Luxury spa day', 'High tea experiences'],
-    rating: 4.8,
-    safety: 'Maximum Safety',
-    groupSize: '10-15 women',
-    includes: ['Flights', 'Luxury hotels', 'All meals']
-  },
-  {
-    id: 'wi-3',
-    title: 'Thailand Girls Trip',
-    destination: 'Bangkok - Phuket',
-    duration: '8 Days 7 Nights',
-    price: '₹1,15,999',
-    image: '/placeholder.svg',
-    highlights: ['Island hopping', 'Thai cooking classes', 'Massage workshops', 'Beach relaxation'],
-    rating: 4.7,
-    safety: 'Women-Friendly',
-    groupSize: '12-18 women',
-    includes: ['Flights', 'Hotels', 'Island tours']
-  },
-  {
-    id: 'wi-4',
-    title: 'Singapore Shopping Extravaganza',
-    destination: 'Singapore',
-    duration: '4 Days 3 Nights',
-    price: '₹75,999',
-    image: '/placeholder.svg',
-    highlights: ['Orchard Road shopping', 'Gardens by the Bay', 'Food tours', 'Marina Bay experience'],
-    rating: 4.6,
-    safety: 'Super Safe',
-    groupSize: '8-14 women',
-    includes: ['Flights', 'City hotels', 'Shopping vouchers']
-  }
-];
+import { useWomenOnlyPackages } from "../hooks/usePackages";
 
 export default function WomenTravelInternational() {
+  const { data: internationalWomenPackages, isLoading, isError } = useWomenOnlyPackages({ tag: 'international' });
+
   return (
     <>
-      {/* Hero Section */}
       <section className="relative min-h-screen flex items-center justify-center overflow-hidden">
-        {/* Navbar with absolute positioning */}
         <div className="absolute top-0 left-0 right-0 z-50 bg-transparent">
           <div className="bg-gradient-to-b from-black/40 to-transparent backdrop-blur-sm">
             <Navbar />
@@ -135,33 +80,21 @@ export default function WomenTravelInternational() {
         </div>
       </section>
 
-      {/* International Women Tours */}
       <section className="py-16 px-4">
         <div className="max-w-7xl mx-auto">
           <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-            {internationalWomenPackages.map((pkg, index) => (
+            {isLoading && <p className="col-span-full text-center">Loading packages...</p>}
+            {isError && <p className="col-span-full text-center text-red-600">Could not fetch packages.</p>}
+
+            {internationalWomenPackages && internationalWomenPackages.map((pkg, index) => (
               <motion.div
-                key={pkg.id}
+                key={pkg._id}
                 initial={{ opacity: 0, y: 30 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ delay: 0.1 * index }}
               >
                 <PackageCard
-                  packageData={{
-                    id: pkg.id,
-                    title: pkg.title,
-                    description: `${pkg.duration} international women-only tour. ${pkg.highlights.join(', ')}.`,
-                    duration: pkg.duration,
-                    placesCovered: pkg.destination,
-                    startingFrom: pkg.price,
-                    type: 'Women Only International',
-                    thumbnail: pkg.image,
-                    rating: pkg.rating,
-                    highlights: pkg.highlights,
-                    safety: pkg.safety,
-                    groupSize: pkg.groupSize,
-                    includes: pkg.includes
-                  }}
+                  packageData={pkg}
                   theme="pink"
                   delay={0.1 * index}
                 />
@@ -171,7 +104,6 @@ export default function WomenTravelInternational() {
         </div>
       </section>
 
-      {/* International Safety Features */}
       <section className="py-16 px-4 bg-pink-50/50">
         <div className="max-w-6xl mx-auto">
           <motion.div
@@ -233,7 +165,6 @@ export default function WomenTravelInternational() {
         </div>
       </section>
 
-      {/* Popular Destinations */}
       <section className="py-16 px-4">
         <div className="max-w-6xl mx-auto">
           <motion.div
@@ -273,7 +204,6 @@ export default function WomenTravelInternational() {
         </div>
       </section>
 
-      {/* Call to Action */}
       <section className="py-16 px-4">
         <div className="max-w-4xl mx-auto text-center">
           <motion.div

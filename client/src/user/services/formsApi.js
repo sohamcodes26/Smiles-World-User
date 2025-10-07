@@ -43,3 +43,23 @@ export const submitCustomEnquiry = async (enquiryData) => {
     throw new Error(error.response?.data?.message || 'Failed to submit enquiry');
   }
 };
+
+
+
+
+
+/**
+ * Submits the package enquiry form data to the backend.
+ * @param {Object} enquiryData - The data from the package inquiry modal.
+ * @returns {Promise<Object>} A promise that resolves to the submission response data.
+ */
+export const submitPackageEnquiry = async (enquiryData) => {
+  try {
+    // The endpoint is /enquiries based on your formsController.js
+    const response = await api.post('/enquiries', enquiryData);
+    return response.data;
+  } catch (error) {
+    console.error('Error submitting package enquiry:', error);
+    throw new Error(error.response?.data?.message || 'Failed to submit enquiry');
+  }
+};

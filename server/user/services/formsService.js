@@ -29,6 +29,7 @@ const createMessage = async (messageData) => {
  * @param {Object} enquiryData - Enquiry data
  * @returns {Promise<Object>} - Created enquiry object
  */
+// In formsService.js
 const createEnquiry = async (enquiryData) => {
   const enquiry = new Enquiry({
     type: enquiryData.type,
@@ -37,9 +38,9 @@ const createEnquiry = async (enquiryData) => {
     phoneNumber: enquiryData.phoneNumber,
     packageId: enquiryData.packageId || null,
     numberOfTravelers: enquiryData.numberOfTravelers || null,
-    subject: enquiryData.subject || '',
-    message: enquiryData.message || '',
-    status: 'New',
+    specialRequests: enquiryData.message || '', // <-- MAP message to specialRequests
+    status: 'New Lead',
+    // Remove subject and message as they are not in the EnquirySchema
   });
 
   await enquiry.save();

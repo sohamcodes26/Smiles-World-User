@@ -30,7 +30,7 @@ export function AppRoutes() {
       <Route path="/group-departure" element={<Group />} />
       <Route path="/blog" element={<Blogs />} />
       <Route path="/contact" element={<Contact />} />
-      <Route path="/package-details" element={<PackageDetails />} />
+      <Route path="/packages/:packageId" element={<PackageDetails />} />
       <Route path="/blog/:postId" element={<BlogPost />} />
       <Route path="/podcast/:podcastId" element={<PodcastPage />} />
       <Route path="/cancellation-policy" element={<CancellationPolicy />} />

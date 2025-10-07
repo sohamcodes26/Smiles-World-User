@@ -5,260 +5,8 @@ import PackageCard from "../components/packageCard";
 import InfoCard from "../components/infoCard";
 import { useRef } from "react";
 
-// Updated package data with new structure
-const internationalTravelPackages = [
-  {
-    id: 1,
-    title: "Mystical Mountains of Manali",
-    description: "Experience the thrilling heights and serene beauty of the Himalayas in this adventurous trip to Manali. Discover snow-capped peaks, pristine valleys, and vibrant local culture while enjoying exciting activities like paragliding, river rafting, and mountain trekking.",
-    duration: "5 Days, 4 Nights",
-    placesCovered: "Manali, Solang Valley, Rohtang Pass, Kullu",
-    bestTimeToVisit: "October to June",
-    peakSeason: "December to February (Snow Season)",
-    midSeason: "March to May & September to November",
-    startingFrom: "25000",
-    itinerariesDay1: "Arrival in Manali, check-in to hotel, local sightseeing including Hadimba Temple and Mall Road, evening at leisure",
-    // Keeping old fields for backward compatibility
-    startDate: "Oct 15, 2025",
-    endDate: "Oct 20, 2025",
-    places: ["Manali", "Solang Valley", "Rohtang Pass"],
-    timeline: [{ description: "Arrival and acclimatization in Manali." }],
-    price: 25000,
-    availableSeats: 12,
-    type: "Adventure",
-    thumbnail: "https://images.unsplash.com/photo-1626621341526-45281a88a374?q=80&w=2070&auto=format&fit=crop",
-    shortDescription: "Experience the thrilling heights and serene beauty of the Himalayas in this adventurous trip to Manali."
-  },
-  {
-    id: 2,
-    title: "Golden Triangle Glory",
-    description: "A classic journey through India's most iconic cities, witnessing the grandeur of Mughal and Rajput architecture. Explore the bustling streets of Delhi, marvel at the Taj Mahal in Agra, and immerse yourself in the royal heritage of Jaipur.",
-    duration: "6 Days, 5 Nights",
-    placesCovered: "Delhi, Agra, Jaipur",
-    bestTimeToVisit: "October to March",
-    peakSeason: "November to February",
-    midSeason: "October & March",
-    startingFrom: "35000",
-    itinerariesDay1: "Arrival in Delhi, airport pickup, check-in to hotel, evening visit to India Gate and Connaught Place",
-    fullItinerary: [
-      {
-        day: 1,
-        title: "Arrival in Delhi",
-        activities: [
-          "Arrive at Delhi International Airport and transfer to hotel",
-          "Evening visit to India Gate and Connaught Place",
-          "Welcome dinner at a local restaurant",
-          "Overnight stay in Delhi"
-        ]
-      },
-      {
-        day: 2,
-        title: "Delhi City Tour",
-        activities: [
-          "Visit Red Fort and Jama Masjid",
-          "Explore Chandni Chowk market with rickshaw ride",
-          "Visit Qutub Minar and Humayun's Tomb",
-          "Drive past President House and Parliament",
-          "Overnight stay in Delhi"
-        ]
-      },
-      {
-        day: 3,
-        title: "Delhi to Agra",
-        activities: [
-          "Morning drive to Agra (Approx. 210 km / 4 hrs)",
-          "Check-in to hotel and refresh",
-          "Visit Agra Fort - UNESCO World Heritage Site",
-          "Sunset visit to Mehtab Bagh for Taj Mahal view",
-          "Overnight stay in Agra"
-        ]
-      },
-      {
-        day: 4,
-        title: "Agra to Jaipur via Fatehpur Sikri",
-        activities: [
-          "Early morning visit to Taj Mahal at sunrise",
-          "Return to hotel for breakfast",
-          "Drive to Jaipur with enroute visit to Fatehpur Sikri",
-          "Arrive in Jaipur and check-in to hotel",
-          "Overnight stay in Jaipur"
-        ]
-      },
-      {
-        day: 5,
-        title: "Jaipur Sightseeing",
-        activities: [
-          "Morning visit to Amber Fort with elephant/jeep ride",
-          "Photo stop at Jal Mahal (Water Palace)",
-          "Visit City Palace and Jantar Mantar",
-          "Photo stop at Hawa Mahal (Palace of Winds)",
-          "Evening free for shopping at local bazaars",
-          "Overnight stay in Jaipur"
-        ]
-      },
-      {
-        day: 6,
-        title: "Jaipur to Delhi & Departure",
-        activities: [
-          "After breakfast, drive back to Delhi (Approx. 260 km / 5 hrs)",
-          "Optional shopping at Delhi markets",
-          "Transfer to airport for onward journey"
-        ]
-      }
-    ],
-    highlights: [
-      {
-        title: "Delhi Highlights",
-        items: [
-          "Red Fort & Jama Masjid – Historically magnificent Mughal architecture",
-          "India Gate & Connaught Place – Iconic landmarks and vibrant shopping",
-          "Qutub Minar – Architecturally stunning UNESCO World Heritage Site",
-          "Chandni Chowk – Bustling markets with authentic street food"
-        ]
-      },
-      {
-        title: "Agra Highlights",
-        items: [
-          "Taj Mahal – Eternally beautiful monument of love",
-          "Agra Fort – Majestically impressive red sandstone fortress",
-          "Fatehpur Sikri – Historically rich abandoned Mughal city",
-          "Mehtab Bagh – Picturesquely scenic sunset views of Taj Mahal"
-        ]
-      },
-      {
-        title: "Jaipur Highlights",
-        items: [
-          "Amber Fort – Regally magnificent hilltop palace",
-          "City Palace – Opulently beautiful royal residence",
-          "Hawa Mahal – Intricately designed Palace of Winds",
-          "Jantar Mantar – Astronomically fascinating observatory",
-          "Local Bazaars – Vibrantly colorful markets for shopping"
-        ]
-      }
-    ],
-    inclusions: [
-      "Accommodation in 3/4 star hotels",
-      "Daily breakfast",
-      "All transfers and sightseeing by AC vehicle",
-      "Professional English-speaking guide",
-      "Monument entrance fees as per itinerary",
-      "All applicable taxes"
-    ],
-    exclusions: [
-      "Airfare/train fare",
-      "Lunch and dinner",
-      "Camera fees at monuments",
-      "Personal expenses and tips",
-      "Travel insurance",
-      "Any items not mentioned in inclusions"
-    ],
-    importantNotes: [
-      "Taj Mahal is closed on Fridays",
-      "Dress modestly when visiting religious sites",
-      "Carry valid ID proof at all times",
-      "Best time to visit is October to March",
-      "Book at least 2 weeks in advance for better rates"
-    ],
-    // Keeping old fields for backward compatibility
-    startDate: "Nov 05, 2025",
-    endDate: "Nov 10, 2025",
-    places: ["Delhi", "Agra", "Jaipur"],
-    timeline: [{ description: "Explore the historic capital city of Delhi." }],
-    price: 35000,
-    availableSeats: 8,
-    type: "Culture",
-    thumbnail: "https://images.unsplash.com/photo-1582512423565-d4b38ce71939?q=80&w=1974&auto=format&fit=crop",
-    shortDescription: "A classic journey through India's most iconic cities, witnessing the grandeur of Mughal and Rajput architecture."
-  },
-  {
-    id: 3,
-    title: "Kerala Backwaters Bliss",
-    description: "Cruise through the serene backwaters of Kerala and enjoy the lush green landscapes of God's Own Country. Experience traditional houseboat stays, spice plantations, and witness the unique ecosystem of the backwaters.",
-    duration: "7 Days, 6 Nights",
-    placesCovered: "Kochi, Alleppey, Munnar, Thekkady",
-    bestTimeToVisit: "September to March",
-    peakSeason: "December to February",
-    midSeason: "September to November & March",
-    startingFrom: "40000",
-    itinerariesDay1: "Arrival in Kochi, transfer to hotel, visit Chinese Fishing Nets, St. Francis Church, and Dutch Palace",
-    // Keeping old fields for backward compatibility
-    startDate: "Dec 01, 2025",
-    endDate: "Dec 07, 2025",
-    places: ["Kochi", "Alleppey", "Munnar"],
-    timeline: [{ description: "Arrival in Kochi, the Queen of the Arabian Sea." }],
-    price: 40000,
-    availableSeats: 15,
-    type: "Relaxation",
-    thumbnail: "https://images.unsplash.com/photo-1602216056096-3b40cc0c9944?q=80&w=1935&auto=format&fit=crop",
-    shortDescription: "Cruise through the serene backwaters of Kerala and enjoy the lush green landscapes of God's Own Country."
-  },
-  {
-    id: 4,
-    title: "Goan Beach Paradise",
-    description: "Relax on the sun-kissed beaches, enjoy vibrant nightlife, and savor delicious seafood in Goa. Experience the perfect blend of Portuguese colonial architecture, tropical beaches, and laid-back coastal lifestyle.",
-    duration: "5 Days, 4 Nights",
-    placesCovered: "North Goa, South Goa, Panaji, Old Goa",
-    bestTimeToVisit: "November to February",
-    peakSeason: "December to January",
-    midSeason: "November & February to March",
-    startingFrom: "22000",
-    itinerariesDay1: "Arrival in Goa, check-in to beach resort, relaxation at Calangute Beach, evening at leisure",
-    // Keeping old fields for backward compatibility
-    startDate: "Jan 10, 2026",
-    endDate: "Jan 15, 2026",
-    places: ["North Goa", "South Goa", "Panaji"],
-    timeline: [{ description: "Check into your beachside resort." }],
-    price: 22000,
-    availableSeats: 20,
-    type: "Leisure",
-    thumbnail: "https://images.unsplash.com/photo-1570222646968-ab23c1a2e737?q=80&w=1974&auto=format&fit=crop",
-    shortDescription: "Relax on the sun-kissed beaches, enjoy vibrant nightlife, and savor delicious seafood in Goa."
-  },
-  {
-    id: 5,
-    title: "Regal Rajasthan",
-    description: "Explore the majestic forts, opulent palaces, and rich cultural heritage of the land of kings. Journey through the pink city of Jaipur, the city of lakes Udaipur, and the blue city of Jodhpur while experiencing royal hospitality.",
-    duration: "8 Days, 7 Nights",
-    placesCovered: "Jaipur, Udaipur, Jodhpur, Pushkar",
-    bestTimeToVisit: "October to March",
-    peakSeason: "November to February",
-    midSeason: "October & March",
-    startingFrom: "45000",
-    itinerariesDay1: "Arrival in Jaipur, check-in to heritage hotel, visit City Palace and Jantar Mantar, evening at local markets",
-    // Keeping old fields for backward compatibility
-    startDate: "Feb 12, 2026",
-    endDate: "Feb 20, 2026",
-    places: ["Jaipur", "Udaipur", "Jodhpur"],
-    timeline: [{ description: "Discover the Pink City, Jaipur." }],
-    price: 45000,
-    availableSeats: 10,
-    type: "Culture",
-    thumbnail: "https://images.unsplash.com/photo-1599661046227-14e7a70d3240?q=80&w=1932&auto=format&fit=crop",
-    shortDescription: "Explore the majestic forts, opulent palaces, and rich cultural heritage of the land of kings."
-  },
-  {
-    id: 6,
-    title: "Spiritual Rishikesh Retreat",
-    description: "Rejuvenate your mind, body, and soul in the yoga capital of the world, nestled in the Himalayan foothills. Experience authentic yoga sessions, meditation by the Ganges, and spiritual awakening in this sacred city.",
-    duration: "5 Days, 4 Nights",
-    placesCovered: "Rishikesh, Haridwar",
-    bestTimeToVisit: "September to April",
-    peakSeason: "February to April",
-    midSeason: "September to January & May",
-    startingFrom: "18000",
-    itinerariesDay1: "Arrival in Rishikesh, check-in to ashram/hotel, evening Ganga Aarti at Triveni Ghat, yoga orientation session",
-    // Keeping old fields for backward compatibility
-    startDate: "Mar 05, 2026",
-    endDate: "Mar 10, 2026",
-    places: ["Rishikesh", "Haridwar"],
-    timeline: [{ description: "Yoga and meditation by the Ganges." }],
-    price: 18000,
-    availableSeats: 25,
-    type: "Wellness",
-    thumbnail: "https://images.unsplash.com/photo-1591732588741-b38a75b2a592?q=80&w=2070&auto=format&fit=crop",
-    shortDescription: "Rejuvenate your mind, body, and soul in the yoga capital of the world, nestled in the Himalayan foothills."
-  }
-];
+// --- 1. IMPORT THE NEW CUSTOM HOOK ---
+import { useInternationalPackages } from "../hooks/usePackages";
 
 // Data for the "Why Choose Us" section
 const features = [
@@ -279,21 +27,24 @@ const features = [
   }
 ];
 
-
-export default function Home() {
+// Changed component name from Home to International
+export default function International() {
   const packagesRef = useRef(null);
+  
+  // --- 2. FETCH DATA USING THE HOOK ---
+  const { data: internationalTravelPackages, isLoading, isError } = useInternationalPackages();
+
   const handleScrollToPackages = () => {
     packagesRef.current?.scrollIntoView({ behavior: "smooth", block: "start" });
   };
   return (
-    // Using a fragment as the top-level element since Layout is removed
     <>
       {/* Hero Section */}
       <section className="relative h-[100vh] flex items-center justify-center overflow-hidden -mt-16">
         <div
           className="absolute inset-0 z-0"
           style={{
-            backgroundImage: `url('https://images.unsplash.com/photo-1501785888041-af3ef285b470?q=80&w=2070&auto=format&fit=crop')`,
+            backgroundImage: `url('https://images.unsplash.com/photo-1501785888041-af3ef285b470?q=80&w=2070&auto-format&fit=crop')`,
             backgroundSize: 'cover',
             backgroundPosition: 'center',
           }}
@@ -354,12 +105,10 @@ export default function Home() {
             </motion.div>
           </motion.div>
         </div>
-
-        {/* Floating Elements */}
       </section>
 
-  {/* International Packages Section */}
-  <section ref={packagesRef} className="py-20 px-4 bg-[#dcf0ff]">
+      {/* International Packages Section */}
+      <section ref={packagesRef} className="py-20 px-4 bg-[#dcf0ff]">
         <div className="max-w-7xl mx-auto">
           <motion.div
             className="text-center mb-16"
@@ -375,17 +124,19 @@ export default function Home() {
             </p>
           </motion.div>
 
-          {/* Package Grid */}
+          {/* --- 3. UPDATED PACKAGE GRID --- */}
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-            {internationalTravelPackages.slice(0, 6).map((pkg, index) => (
+            {isLoading && <p className="col-span-full text-center">Loading packages...</p>}
+            {isError && <p className="col-span-full text-center text-red-600">Could not fetch packages. Please try again later.</p>}
+
+            {internationalTravelPackages && internationalTravelPackages.map((pkg, index) => (
               <motion.div
-                key={pkg.id}
+                key={pkg._id} // Use _id from database
                 initial={{ opacity: 0, y: 30 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
                 transition={{ delay: index * 0.1 }}
               >
-                {/* Corrected prop name from 'package' to 'packageData' */}
                 <PackageCard packageData={pkg} />
               </motion.div>
             ))}
@@ -408,7 +159,6 @@ export default function Home() {
           </motion.div>
 
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-            {/* Refactored to use the InfoCard component */}
             {features.map((feature, index) => (
               <InfoCard
                 key={index}
