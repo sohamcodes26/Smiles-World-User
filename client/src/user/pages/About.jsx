@@ -104,10 +104,10 @@ export default function About() {
                                         <User className="w-28 h-28 text-purple-800/50" strokeWidth={1} />
                                     )}
 
-                                    <p className="mt-4 text-xl font-medium text-purple-900">
+                                    <p className="mt-4 text-xl font-medium text-[white]">
                                         Shweta Undre
                                     </p>
-                                    <p className="text-sm text-purple-800/80">
+                                    <p className="text-sm text-[#e7e7e7]">
                                         Founder, Smiles World
                                     </p>
                                 </>

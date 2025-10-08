@@ -1,5 +1,6 @@
 import { Link } from "react-router-dom";
 import logo from "../../assets/logo.ico";
+import { Instagram, Facebook, Twitter, Youtube, Linkedin } from "lucide-react"; // <-- IMPORT ICONS
 
 // --- NAVIGATION UPDATED ---
 const navigation = [
@@ -20,6 +21,15 @@ const policyLinks = [
   { name: "Cancellations & Refunds", href: "/cancellation-policy" },
 ];
 
+// --- SOCIAL MEDIA LINKS ADDED ---
+const socialLinks = [
+  { name: "Instagram", href: "#", icon: Instagram, color: "#E4405F" },
+  { name: "Facebook", href: "#", icon: Facebook, color: "#1877F2" },
+  { name: "Twitter", href: "#", icon: Twitter, color: "#1DA1F2" },
+  { name: "YouTube", href: "#", icon: Youtube, color: "#FF0000" },
+  { name: "LinkedIn", href: "#", icon: Linkedin, color: "#0A66C2" },
+];
+
 export function Footer() {
   return (
     <footer className="bg-card/80 backdrop-blur-sm border-t border-gray-300 bg-[white]">
@@ -32,8 +42,25 @@ export function Footer() {
           <p className="text-muted-foreground text-base sm:text-lg px-4 text-[#5d5b5b]">
             Explore more. Smile wider.
           </p>
+
+          {/* --- SOCIAL MEDIA SECTION --- */}
+          <div className="pt-4 flex justify-center gap-5">
+            {socialLinks.map((item) => (
+              <a
+                key={item.name}
+                href={item.href}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="text-gray-500 transition-transform duration-300 hover:scale-110"
+                aria-label={item.name}
+              >
+                <item.icon size={24} style={{ color: item.color }} />
+              </a>
+            ))}
+          </div>
+
           {/* Main Navigation */}
-          <div className="flex flex-wrap justify-center gap-4 sm:gap-6 text-muted-foreground px-4 text-[#5d5b5b]">
+          <div className="pt-4 flex flex-wrap justify-center gap-4 sm:gap-6 text-muted-foreground px-4 text-[#5d5b5b]">
             {navigation.map((item) => (
               <Link
                 key={item.name}

@@ -37,7 +37,7 @@ export default function CancellationPolicy() {
       </section>
 
       {/* Policy Content */}
-      <section className="py-16 px-4">
+      <section className="py-16 px-4 whitespace-pre-wrap">
         <div 
           className="max-w-3xl mx-auto prose lg:prose-lg"
           dangerouslySetInnerHTML={{ __html: data.policy }}

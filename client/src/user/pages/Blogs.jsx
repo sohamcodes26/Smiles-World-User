@@ -1,48 +1,88 @@
-import React, { useState, useMemo, useRef } from 'react';
+import React, { useState, useMemo, useRef, useEffect } from 'react';
 import { motion } from 'framer-motion';
 import { Search, PlayCircle } from 'lucide-react';
-import { Link } from 'react-router-dom'; 
+import { Link } from 'react-router-dom';
 import { useBlogs } from '../hooks/useBlogs';
 import { usePodcasts } from '../hooks/usePodcasts';
-
-// --- 1. IMPORT THE BANNER HOOK ---
 import { useBlogBanner } from '../hooks/useHeroBanner.jsx';
-
-import BlogCard from '../components/BlogCard'; 
-import Newsletter from '../components/Newsletter'; 
-import TopicCard from '../components/TopicCard'; 
+import BlogCard from '../components/BlogCard';
+import Newsletter from '../components/Newsletter';
+import TopicCard from '../components/TopicCard';
 
 const popularTopicsData = [
-  { topic: "Solo Travel", emoji: "🎒", count: "25 articles" }, { topic: "Women Safety", emoji: "🛡️", count: "18 articles" }, { topic: "Budget Travel", emoji: "💰", count: "32 articles" },
-  { topic: "Adventure", emoji: "🏔️", count: "22 articles" }, { topic: "Food & Culture", emoji: "🍛", count: "28 articles" }, { topic: "Photography", emoji: "📸", count: "15 articles" },
+  { topic: "Solo Travel", emoji: "🎒", count: "25 articles" }, 
+  { topic: "Women Safety", emoji: "🛡️", count: "18 articles" }, 
+  { topic: "Budget Travel", emoji: "💰", count: "32 articles" },
+  { topic: "Adventure", emoji: "🏔️", count: "22 articles" }, 
+  { topic: "Food & Culture", emoji: "🍛", count: "28 articles" }, 
+  { topic: "Photography", emoji: "📸", count: "15 articles" },
 ];
 
+// --- FIXED PODCASTCARD COMPONENT ---
 const PodcastCard = ({ podcast }) => {
-    return (
-        <div className="bg-white rounded-2xl shadow-lg overflow-hidden flex flex-col group transition-all duration-300 hover:shadow-2xl hover:-translate-y-2">
-            <img src={podcast.thumbnailUrl || "https://via.placeholder.com/400x250?text=Podcast"} alt={podcast.title} className="w-full h-48 object-cover" />
-            <div className="p-6 flex flex-col flex-grow">
-                <h3 className="text-xl font-bold text-[#2A3A5B] mt-2 flex-grow">{podcast.title}</h3>
-                <p className="text-gray-600 mt-2 text-sm line-clamp-3">{podcast.description}</p>
-                <Link
-                  to={`/podcast/${podcast.podcastId}`}
-                  className="mt-6 w-full px-4 py-2 font-semibold rounded-full text-white bg-orange-500 hover:bg-orange-600 transition-colors shadow-lg flex items-center justify-center gap-2 text-center"
-                >
-                    <PlayCircle size={20} /> Listen Now
-                </Link>
-            </div>
+  const [showMore, setShowMore] = useState(false);
+
+  const truncateText = (text, maxLength) => {
+    if (!text || text.length <= maxLength) return text;
+    const truncated = text.substring(0, maxLength);
+    const lastSpace = truncated.lastIndexOf(' ');
+    return lastSpace > 0 ? truncated.substring(0, lastSpace) : truncated;
+  };
+
+  const description = podcast.description || '';
+  const MAX_LENGTH = 150; // Adjust this to control when "Show More" appears
+
+  return (
+    <div className="bg-white rounded-2xl shadow-lg overflow-hidden flex flex-col group transition-all duration-300 hover:shadow-2xl hover:-translate-y-2">
+      <img 
+        src={podcast.thumbnailUrl || "https://via.placeholder.com/400x250?text=Podcast"} 
+        alt={podcast.title} 
+        className="w-full h-48 object-cover" 
+      />
+      <div className="p-6 flex flex-col flex-grow">
+        <h3 className="text-xl font-bold text-[#2A3A5B] mt-2">
+          {podcast.title}
+        </h3>
+        
+        <div className="mt-2">
+          <p className="text-gray-600 text-sm">
+            {!description ? '-' : (
+              showMore || description.length <= MAX_LENGTH ? (
+                <>
+                  {description}
+                  {description.length > MAX_LENGTH && showMore && (
+                    <> <button onClick={() => setShowMore(false)} className="text-orange-500 hover:text-orange-600 font-semibold whitespace-nowrap">Show Less</button></>
+                  )}
+                </>
+              ) : (
+                <>
+                  {truncateText(description, MAX_LENGTH)}... 
+                  <button onClick={() => setShowMore(true)} className="text-orange-500 hover:text-orange-600 font-semibold whitespace-nowrap">Show More</button>
+                </>
+              )
+            )}
+          </p>
         </div>
-    );
+
+        <Link
+          to={`/podcast/${podcast.podcastId}`}
+          className="mt-6 w-full px-4 py-2 font-semibold rounded-full text-white bg-orange-500 hover:bg-orange-600 transition-colors shadow-lg flex items-center justify-center gap-2 text-center"
+        >
+          <PlayCircle size={20} /> Play Now
+        </Link>
+      </div>
+    </div>
+  );
 };
+
 export default function Blogs() {
   const [searchTerm, setSearchTerm] = useState("");
   const [selectedCategory, setSelectedCategory] = useState("All");
   const blogSectionRef = useRef(null);
-  
+
   const { data: blogs, isLoading: isLoadingBlogs, isError: isErrorBlogs } = useBlogs();
   const { data: podcasts, isLoading: isLoadingPodcasts, isError: isErrorPodcasts } = usePodcasts();
 
-  // --- 2. CALL THE BANNER HOOK ---
   const { data: blogContent } = useBlogBanner();
 
   const heroImageUrl = blogContent?.heroBanner?.imageUrl;
@@ -52,11 +92,12 @@ export default function Blogs() {
     if (!blogs) return ["All"];
     return ["All", ...new Set(blogs.map(post => post.tag))];
   }, [blogs]);
-  
+
   const filteredPosts = useMemo(() => {
     if (!blogs) return [];
     return blogs.filter(post =>
-      (post.title.toLowerCase().includes(searchTerm.toLowerCase()) || post.shortDescription.toLowerCase().includes(searchTerm.toLowerCase())) &&
+      (post.title.toLowerCase().includes(searchTerm.toLowerCase()) || 
+       post.shortDescription.toLowerCase().includes(searchTerm.toLowerCase())) &&
       (selectedCategory === "All" || post.tag === selectedCategory)
     );
   }, [searchTerm, selectedCategory, blogs]);
@@ -74,7 +115,6 @@ export default function Blogs() {
         <div
           className="absolute inset-0 z-0 opacity-70"
           style={{
-            // --- 3. USE THE DYNAMIC IMAGE URL ---
             backgroundImage: `url(${heroImageUrl || fallbackImageUrl})`,
             backgroundSize: 'cover',
             backgroundPosition: 'center',
@@ -84,21 +124,27 @@ export default function Blogs() {
         </div>
 
         <div className="relative z-10 text-center max-w-4xl mx-auto px-4">
-          <motion.h1 
-            initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.5 }}
+          <motion.h1
+            initial={{ opacity: 0, y: 20 }} 
+            animate={{ opacity: 1, y: 0 }} 
+            transition={{ duration: 0.5 }}
             className="text-5xl md:text-7xl font-bold text-white tracking-tight"
           >
             Travel Blog
           </motion.h1>
-          <motion.p 
-            initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.5, delay: 0.2 }}
+          <motion.p
+            initial={{ opacity: 0, y: 20 }} 
+            animate={{ opacity: 1, y: 0 }} 
+            transition={{ duration: 0.5, delay: 0.2 }}
             className="text-xl text-white/90 max-w-2xl mx-auto mt-6"
           >
             Discover travel tips, destination guides, and inspiring stories from fellow travelers around the world.
           </motion.p>
-          
-          <motion.div 
-            initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.5, delay: 0.4 }}
+
+          <motion.div
+            initial={{ opacity: 0, y: 20 }} 
+            animate={{ opacity: 1, y: 0 }} 
+            transition={{ duration: 0.5, delay: 0.4 }}
             className="max-w-xl mx-auto mt-10"
           >
             <div className="relative">
@@ -112,8 +158,10 @@ export default function Blogs() {
             </div>
           </motion.div>
 
-          <motion.div 
-            initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.5, delay: 0.6 }}
+          <motion.div
+            initial={{ opacity: 0, y: 20 }} 
+            animate={{ opacity: 1, y: 0 }} 
+            transition={{ duration: 0.5, delay: 0.6 }}
             className="mt-8"
           >
             <div className="flex flex-wrap justify-center gap-3 max-w-7xl mx-auto">
@@ -122,9 +170,9 @@ export default function Blogs() {
                   key={category}
                   onClick={() => handleCategoryClick(category)}
                   className={`px-5 py-2 rounded-full text-sm font-semibold transition-all duration-300 ${
-                    selectedCategory === category 
-                    ? 'bg-orange-500 text-white shadow-lg'
-                    : 'bg-white/90 backdrop-blur-sm text-[#2A3A5B] border border-white/50 hover:bg-white hover:shadow-lg'
+                    selectedCategory === category
+                      ? 'bg-orange-500 text-white shadow-lg'
+                      : 'bg-white/90 backdrop-blur-sm text-[#2A3A5B] border border-white/50 hover:bg-white hover:shadow-lg'
                   }`}
                 >
                   {category}
@@ -152,10 +200,10 @@ export default function Blogs() {
             ))}
           </div>
           {blogs && filteredPosts.length === 0 && !isLoadingBlogs && (
-             <div className="text-center py-12 col-span-full">
-               <h3 className="text-2xl font-bold text-[#2A3A5B]">No articles found</h3>
-               <p className="text-slate-500 mt-2">Try adjusting your search or filter criteria.</p>
-             </div>
+            <div className="text-center py-12 col-span-full">
+              <h3 className="text-2xl font-bold text-[#2A3A5B]">No articles found</h3>
+              <p className="text-slate-500 mt-2">Try adjusting your search or filter criteria.</p>
+            </div>
           )}
         </div>
       </section>
@@ -163,14 +211,19 @@ export default function Blogs() {
       <section className="py-24 px-4 bg-yellow-50">
         <div className="max-w-7xl mx-auto">
           <div className="text-center mb-12">
-            <h2 className="text-4xl font-bold text-[#2A3A5B]">Listen to Our Podcasts</h2>
+            <h2 className="text-4xl font-bold text-[#2A3A5B]">Watch Our Podcasts</h2>
             <p className="text-lg text-orange-800 mt-4">Insights and stories from the road, delivered to your ears.</p>
           </div>
           {isLoadingPodcasts && <p className="text-center">Loading podcasts...</p>}
           {isErrorPodcasts && <p className="text-center text-red-500">Failed to load podcasts.</p>}
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
             {podcasts && podcasts.map((podcast, index) => (
-              <motion.div key={podcast.podcastId} initial={{ opacity: 0, y: 30 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.5, delay: index * 0.1 }}>
+              <motion.div 
+                key={podcast.podcastId} 
+                initial={{ opacity: 0, y: 30 }} 
+                animate={{ opacity: 1, y: 0 }} 
+                transition={{ duration: 0.5, delay: index * 0.1 }}
+              >
                 <PodcastCard podcast={podcast} />
               </motion.div>
             ))}
