@@ -136,24 +136,46 @@ export default function About() {
 
             <section className="py-20 px-4">
                 <div className="max-w-7xl mx-auto">
-                    <motion.div
-                        initial={{ opacity: 0, y: 30 }}
-                        whileInView={{ opacity: 1, y: 0 }}
-                        viewport={{ once: true }}
-                        className="max-w-3xl mx-auto mb-20"
-                    >
-                        <div className="cloud-card p-10 text-center bg-white rounded-3xl shadow-lg shadow-purple-500/20">
-                            <div className="mb-5 flex justify-center">
-                                <img src={logo} alt="Smiles World Logo" className="w-16 h-16" />
+                    <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 mb-20">
+                        {/* Mission Card */}
+                        <motion.div
+                            initial={{ opacity: 0, y: 30 }}
+                            whileInView={{ opacity: 1, y: 0 }}
+                            viewport={{ once: true }}
+                        >
+                            <div className="cloud-card h-full p-10 text-center bg-white rounded-3xl shadow-lg shadow-purple-500/20 flex flex-col">
+                                <div className="mb-5 flex justify-center">
+                                    <img src={logo} alt="Smiles World Logo" className="w-16 h-16" />
+                                </div>
+                                <h3 className="text-4xl font-bold text-black mb-4">
+                                    Our Mission
+                                </h3>
+                                <p className="text-xl text-muted-foreground">
+                                    {content.storyAndMission.mission.text}
+                                </p>
                             </div>
-                            <h3 className="text-4xl font-bold text-black mb-4">
-                                Our Mission
-                            </h3>
-                            <p className="text-xl text-muted-foreground">
-                                {content.storyAndMission.mission.text}
-                            </p>
-                        </div>
-                    </motion.div>
+                        </motion.div>
+
+                        {/* Vision Card */}
+                        <motion.div
+                            initial={{ opacity: 0, y: 30 }}
+                            whileInView={{ opacity: 1, y: 0 }}
+                            transition={{ delay: 0.1 }}
+                            viewport={{ once: true }}
+                        >
+                            <div className="cloud-card h-full p-10 text-center bg-white rounded-3xl shadow-lg shadow-purple-500/20 flex flex-col">
+                                <div className="mb-5 flex justify-center">
+                                    <img src={logo} alt="Smiles World Logo" className="w-16 h-16" />
+                                </div>
+                                <h3 className="text-4xl font-bold text-black mb-4">
+                                    Our Vision
+                                </h3>
+                                <p className="text-xl text-muted-foreground">
+                                    Our vision is to create a global community of happy travelers by delivering innovative, personalized, and memorable journeys.
+                                </p>
+                            </div>
+                        </motion.div>
+                    </div>
 
                     <motion.div
                         className="text-center mb-16"
@@ -170,12 +192,12 @@ export default function About() {
                     </motion.div>
                     <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
                         {[
-                            { emoji: "🛡️", title: "Safety First", description: "Your security and well-being are our top priority in every destination we visit." },
-                            { emoji: "💖", title: "Authentic Experiences", description: "We focus on genuine cultural connections and meaningful travel experiences." },
-                            { emoji: "👥", title: "Inclusive Travel", description: "Creating welcoming spaces for travelers of all backgrounds and comfort levels." },
-                            { emoji: "⭐", title: "Excellence", description: "Committed to delivering exceptional service and unforgettable memories." },
-                            { emoji: "🌱", title: "Sustainable Tourism", description: "Supporting local communities while preserving the beauty of our destinations." },
-                            { emoji: "🤝", title: "Trust & Transparency", description: "Honest pricing, clear communication, and reliable service you can depend on." },
+                            { emoji: "😊", title: "Customer Delight", description: "We go the extra mile to ensure every journey is filled with comfort, joy, and smiles." },
+                            { emoji: "💖", title: "Authenticity", description: "We believe in offering real experiences that connect travelers with the true essence of a destination." },
+                            { emoji: "🤝", title: "Trust & Transparency", description: "We build lasting relationships through honest advice, seamless planning, and reliable service." },
+                            { emoji: "💡", title: "Innovation", description: "We embrace new ideas and technologies to craft modern, personalized travel solutions." },
+                            { emoji: "🌱", title: "Care & Responsibility", description: "We promote ethical travel, safety, and sustainable practices that respect communities and nature." },
+                            { emoji: "👥", title: "Teamwork & Passion", description: "Our strength lies in a dedicated team driven by the love for travel and creating unforgettable experiences." },
                         ].map((value, index) => (
                             <InfoCard key={index} delay={index * 0.1} icon={value.emoji} title={value.title} description={<p>{value.description}</p>} />
                         ))}
