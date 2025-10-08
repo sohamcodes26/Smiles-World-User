@@ -4,11 +4,12 @@ import { Link } from "react-router-dom";
 import PackageCard from "../components/packageCard";
 import InfoCard from "../components/infoCard";
 import { useRef } from "react";
-
-// --- 1. IMPORT THE NEW CUSTOM HOOK ---
 import { useInternationalPackages } from "../hooks/usePackages";
 
-// Data for the "Why Choose Us" section
+// --- 1. IMPORT THE BANNER HOOK ---
+import { useInternationalBanner } from "../hooks/useHeroBanner.jsx";
+
+
 const features = [
   {
     icon: "🛡️",
@@ -27,24 +28,28 @@ const features = [
   }
 ];
 
-// Changed component name from Home to International
 export default function International() {
   const packagesRef = useRef(null);
   
-  // --- 2. FETCH DATA USING THE HOOK ---
   const { data: internationalTravelPackages, isLoading, isError } = useInternationalPackages();
+  
+  // --- 2. CALL THE BANNER HOOK ---
+  const { data: internationalContent } = useInternationalBanner();
+
+  const heroImageUrl = internationalContent?.heroBanner?.imageUrl;
+  const fallbackImageUrl = 'https://images.unsplash.com/photo-1501785888041-af3ef285b470?q=80&w=2070&auto-format&fit=crop';
 
   const handleScrollToPackages = () => {
     packagesRef.current?.scrollIntoView({ behavior: "smooth", block: "start" });
   };
   return (
     <>
-      {/* Hero Section */}
       <section className="relative h-[100vh] flex items-center justify-center overflow-hidden -mt-16">
         <div
           className="absolute inset-0 z-0"
           style={{
-            backgroundImage: `url('https://images.unsplash.com/photo-1501785888041-af3ef285b470?q=80&w=2070&auto-format&fit=crop')`,
+            // --- 3. USE THE DYNAMIC IMAGE URL ---
+            backgroundImage: `url(${heroImageUrl || fallbackImageUrl})`,
             backgroundSize: 'cover',
             backgroundPosition: 'center',
           }}
@@ -107,7 +112,6 @@ export default function International() {
         </div>
       </section>
 
-      {/* International Packages Section */}
       <section ref={packagesRef} className="py-20 px-4 bg-[#dcf0ff]">
         <div className="max-w-7xl mx-auto">
           <motion.div
@@ -124,14 +128,13 @@ export default function International() {
             </p>
           </motion.div>
 
-          {/* --- 3. UPDATED PACKAGE GRID --- */}
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
             {isLoading && <p className="col-span-full text-center">Loading packages...</p>}
             {isError && <p className="col-span-full text-center text-red-600">Could not fetch packages. Please try again later.</p>}
 
             {internationalTravelPackages && internationalTravelPackages.map((pkg, index) => (
               <motion.div
-                key={pkg._id} // Use _id from database
+                key={pkg._id}
                 initial={{ opacity: 0, y: 30 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
@@ -144,7 +147,6 @@ export default function International() {
         </div>
       </section>
 
-      {/* Why Choose Us Section */}
       <section className="py-20 px-4 bg-[#dcf0ff]">
         <div className="max-w-6xl mx-auto">
           <motion.div
@@ -172,7 +174,6 @@ export default function International() {
         </div>
       </section>
 
-      {/* CTA Section */}
       <section className="py-20 px-4 bg-[#dcf0ff]">
         <div className="max-w-4xl mx-auto text-center">
           <motion.div
@@ -193,7 +194,7 @@ export default function International() {
                 Plan My Trip
               </Link>
               <Link to="/contact" className="inline-flex items-center justify-center text-lg px-3 py-2 font-semibold text-blue-600 bg-white border-2 border-blue-600 rounded-full hover:bg-blue-50 transition-colors">
-                <Heart className="mr-2" size={20} />
+                <Heart className="mr-2" size={18} />
                 Get In Touch
               </Link>
             </div>

@@ -6,11 +6,19 @@ import InfoCard from "../components/infoCard";
 import PackageCard from "../components/packageCard";
 import { useGroupDeparturePackages } from "../hooks/usePackages";
 
+// --- 1. IMPORT THE BANNER HOOK ---
+import { useGroupBanner } from "../hooks/useHeroBanner.jsx";
+
 export default function GroupDeparture() {
   const [selectedType, setSelectedType] = useState('domestic');
   const packagesRef = useRef(null);
   
   const { data: groupDepartures, isLoading, isError } = useGroupDeparturePackages();
+  
+  // --- 2. CALL THE BANNER HOOK ---
+  const { data: groupContent } = useGroupBanner();
+
+  const heroImageUrl = groupContent?.heroBanner?.imageUrl;
   
   React.useEffect(() => {
     document.body.style.margin = '0';
@@ -38,7 +46,8 @@ export default function GroupDeparture() {
         <div 
           className="absolute inset-0 z-0"
           style={{
-            backgroundImage: `url(/group_image.webp)`,
+            // --- 3. USE THE DYNAMIC IMAGE URL ---
+            backgroundImage: `url(${heroImageUrl || '/group_image.webp'})`,
             backgroundSize: 'cover',
             backgroundPosition: 'center',
             backgroundRepeat: 'no-repeat',

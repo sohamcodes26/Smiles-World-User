@@ -1,4 +1,4 @@
-import mongoose from 'mongoose';
+const mongoose = require('mongoose');
 
 const BlogSchema = new mongoose.Schema({
     _id: { 
@@ -11,4 +11,4 @@ const BlogSchema = new mongoose.Schema({
     }
 }, { timestamps: true, collection: 'Pages' }); 
 
-export default mongoose.model('BlogImageContent', BlogSchema, 'Pages');
+module.exports = mongoose.model('BlogImageContent', BlogSchema, 'Pages');

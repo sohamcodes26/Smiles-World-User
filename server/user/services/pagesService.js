@@ -9,6 +9,8 @@ const ContactContent = require('../../models/ContactSchema');
 const DomesticContent = require('../../models/DomesticPageSchema');
 const InternationalContent = require('../../models/InternationalPageSchema');
 
+const BlogImageContent = require('../../models/BlogImageSchema');
+
 /**
  * Get home page content
  * @returns {Promise<Object>} - Home page content
@@ -78,13 +80,13 @@ const getWomenTravelPageContent = async () => {
  * @returns {Promise<Object>} - Group departures page content
  */
 const getGroupDeparturesPageContent = async () => {
-  let content = await GroupDepartureContent.findById('group_departures_page')
+  let content = await GroupDepartureContent.findById('group_departure_page')
     .select('-__v')
     .lean();
 
   if (!content) {
     content = {
-      _id: 'group_departures_page',
+      _id: 'group_departure_page',
       heroBanner: { imageUrl: '' }
     };
   }
@@ -179,6 +181,28 @@ const getCancellationPolicy = async () => {
 };
 
 
+
+// --- ADDED: New function to get blog page banner content ---
+/**
+ * Get blog page content
+ * @returns {Promise<Object>} - Blog page content
+ */
+const getBlogPageContent = async () => {
+  let content = await BlogImageContent.findById('blog_image_updater')
+    .select('-__v')
+    .lean();
+
+  if (!content) {
+    content = {
+      _id: 'blog_image_updater',
+      heroBanner: { imageUrl: '' },
+    };
+  }
+
+  return content;
+};
+
+
 module.exports = {
   getHomePageContent,
   getAboutPageContent,
@@ -188,4 +212,5 @@ module.exports = {
   getDomesticPageContent,
   getInternationalPageContent,
   getCancellationPolicy, // <-- Export the new function
+  getBlogPageContent,
 };

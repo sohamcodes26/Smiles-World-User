@@ -117,6 +117,24 @@ const getInternationalPageContent = asyncHandler(async (req, res) => {
   );
 });
 
+
+// --- ADDED: New controller for blog page banner content ---
+/**
+ * @route   GET /api/pages/blog
+ * @desc    Get blog page content
+ * @access  Public
+ */
+const getBlogPageContent = asyncHandler(async (req, res) => {
+  const content = await pagesService.getBlogPageContent();
+
+  return successResponse(
+    res,
+    content,
+    'Blog page content retrieved successfully',
+    200
+  );
+});
+
 module.exports = {
   getHomePageContent,
   getAboutPageContent,
@@ -125,4 +143,5 @@ module.exports = {
   getContactPageContent,
   getDomesticPageContent,
   getInternationalPageContent,
+  getBlogPageContent,
 };

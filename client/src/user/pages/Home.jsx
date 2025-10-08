@@ -3,11 +3,11 @@ import { MapPin, Heart, Sparkles } from "lucide-react";
 import { Link } from "react-router-dom";
 import PackageCard from "../components/packageCard";
 import InfoCard from "../components/infoCard";
+import { useFeaturedPackages } from "../hooks/usePackages";
 
-// --- IMPORT THE CUSTOM HOOK ---
-import { useFeaturedPackages } from "../hooks/usePackages"; // Adjust path as needed
+// --- 1. IMPORT THE BANNER HOOK ---
+import { useHomeBanner } from "../hooks/useHeroBanner.jsx";
 
-// Data for the "Why Choose Us" section
 const features = [
   {
     icon: "🛡️",
@@ -26,20 +26,23 @@ const features = [
   }
 ];
 
-
 export default function Home() {
-  // --- FETCH FEATURED PACKAGES USING THE HOOK ---
   const { data: featuredPackages, isLoading, isError } = useFeaturedPackages();
+  
+  // --- 2. CALL THE BANNER HOOK ---
+  const { data: homeContent } = useHomeBanner();
+  
+  const heroImageUrl = homeContent?.heroBanner?.imageUrl;
+  const fallbackImageUrl = 'https://images.unsplash.com/photo-1501785888041-af3ef285b470?q=80&w=2070&auto=format&fit=crop';
 
   return (
-    // Using a fragment as the top-level element since Layout is removed
     <>
-      {/* Hero Section */}
       <section className="relative h-[100vh] flex items-center justify-center overflow-hidden -mt-16">
         <div
           className="absolute inset-0 z-0"
           style={{
-            backgroundImage: `url('https://images.unsplash.com/photo-1501785888041-af3ef285b470?q=80&w=2070&auto=format&fit=crop')`,
+            // --- 3. USE THE DYNAMIC IMAGE URL ---
+            backgroundImage: `url(${heroImageUrl || fallbackImageUrl})`,
             backgroundSize: 'cover',
             backgroundPosition: 'center',
           }}
@@ -101,11 +104,8 @@ export default function Home() {
             </motion.div>
           </motion.div>
         </div>
-
-        {/* Floating Elements */}
       </section>
 
-      {/* Featured Packages Section */}
       <section className="py-20 px-4 bg-[#dcf0ff]">
         <div className="max-w-7xl mx-auto">
           <motion.div
@@ -122,7 +122,6 @@ export default function Home() {
             </p>
           </motion.div>
 
-          {/* Package Grid */}
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
             {isLoading && <p>Loading packages...</p>}
             {isError && <p>Could not fetch packages. Please try again later.</p>}
@@ -141,7 +140,6 @@ export default function Home() {
         </div>
       </section>
 
-      {/* Why Choose Us Section */}
       <section className="py-20 px-4 bg-[#dcf0ff]">
         <div className="max-w-6xl mx-auto">
           <motion.div
@@ -169,7 +167,6 @@ export default function Home() {
         </div>
       </section>
 
-      {/* CTA Section */}
       <section className="py-20 px-4 bg-[#dcf0ff]">
         <div className="max-w-4xl mx-auto text-center">
           <motion.div
@@ -190,7 +187,7 @@ export default function Home() {
                 Plan My Trip
               </Link>
               <Link to="/contact" className="inline-flex items-center justify-center text-lg px-3 py-2 font-semibold text-blue-600 bg-white border-2 border-blue-600 rounded-full hover:bg-blue-50 transition-colors">
-                <Heart className="mr-2" size={20} />
+                <Heart className="mr-2" size={18} />
                 Get In Touch
               </Link>
             </div>

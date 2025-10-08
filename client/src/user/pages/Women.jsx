@@ -7,12 +7,21 @@ import InfoCard from "../components/infoCard";
 import heroWomen from "../../assets/group_image.webp";
 import { useWomenOnlyPackages } from "../hooks/usePackages";
 
+// --- 1. IMPORT THE BANNER HOOK ---
+import { useWomenBanner } from "../hooks/useHeroBanner.jsx";
+
+
 export default function Women() {
   const [selectedType, setSelectedType] = useState('domestic');
   const packagesRef = useRef(null);
   
   const { data: womenTravelPackages, isLoading, isError } = useWomenOnlyPackages();
   
+  // --- 2. CALL THE BANNER HOOK ---
+  const { data: womenContent } = useWomenBanner();
+
+  const heroImageUrl = womenContent?.heroBanner?.imageUrl;
+
   const handleTabChange = (type) => {
     setSelectedType(type);
     setTimeout(() => {
@@ -33,7 +42,8 @@ export default function Women() {
         <div 
           className="absolute inset-0 z-0"
           style={{
-            backgroundImage: `url(${heroWomen})`,
+            // --- 3. USE THE DYNAMIC IMAGE URL ---
+            backgroundImage: `url(${heroImageUrl || heroWomen})`,
             backgroundSize: 'cover',
             backgroundPosition: 'center',
             backgroundRepeat: 'no-repeat',

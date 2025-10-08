@@ -2,24 +2,21 @@ import React, { useState, useMemo, useRef } from 'react';
 import { motion } from 'framer-motion';
 import { Search, PlayCircle } from 'lucide-react';
 import { Link } from 'react-router-dom'; 
-// --- REMOVED MOCK DATA IMPORTS ---
+import { useBlogs } from '../hooks/useBlogs';
+import { usePodcasts } from '../hooks/usePodcasts';
 
-// --- HOOKS IMPORT ---
-import { useBlogs } from '../hooks/useBlogs'; // Adjust path if needed
-import { usePodcasts } from '../hooks/usePodcasts'; // Adjust path if needed
+// --- 1. IMPORT THE BANNER HOOK ---
+import { useBlogBanner } from '../hooks/useHeroBanner.jsx';
 
-// Import your existing components
 import BlogCard from '../components/BlogCard'; 
 import Newsletter from '../components/Newsletter'; 
 import TopicCard from '../components/TopicCard'; 
 
-// --- MOCK DATA (Removed blog and podcast data, kept topics for now) ---
 const popularTopicsData = [
   { topic: "Solo Travel", emoji: "🎒", count: "25 articles" }, { topic: "Women Safety", emoji: "🛡️", count: "18 articles" }, { topic: "Budget Travel", emoji: "💰", count: "32 articles" },
   { topic: "Adventure", emoji: "🏔️", count: "22 articles" }, { topic: "Food & Culture", emoji: "🍛", count: "28 articles" }, { topic: "Photography", emoji: "📸", count: "15 articles" },
 ];
 
-// --- UPDATED PodcastCard Component to match backend schema ---
 const PodcastCard = ({ podcast }) => {
     return (
         <div className="bg-white rounded-2xl shadow-lg overflow-hidden flex flex-col group transition-all duration-300 hover:shadow-2xl hover:-translate-y-2">
@@ -27,9 +24,6 @@ const PodcastCard = ({ podcast }) => {
             <div className="p-6 flex flex-col flex-grow">
                 <h3 className="text-xl font-bold text-[#2A3A5B] mt-2 flex-grow">{podcast.title}</h3>
                 <p className="text-gray-600 mt-2 text-sm line-clamp-3">{podcast.description}</p>
-                
-                {/* --- THIS IS THE CHANGE --- */}
-                {/* Replace the <button> with a <Link> that looks like a button */}
                 <Link
                   to={`/podcast/${podcast.podcastId}`}
                   className="mt-6 w-full px-4 py-2 font-semibold rounded-full text-white bg-orange-500 hover:bg-orange-600 transition-colors shadow-lg flex items-center justify-center gap-2 text-center"
@@ -45,14 +39,17 @@ export default function Blogs() {
   const [selectedCategory, setSelectedCategory] = useState("All");
   const blogSectionRef = useRef(null);
   
-  // --- FETCHING DATA WITH HOOKS ---
   const { data: blogs, isLoading: isLoadingBlogs, isError: isErrorBlogs } = useBlogs();
   const { data: podcasts, isLoading: isLoadingPodcasts, isError: isErrorPodcasts } = usePodcasts();
 
-  // --- UPDATED LOGIC to use fetched data ---
+  // --- 2. CALL THE BANNER HOOK ---
+  const { data: blogContent } = useBlogBanner();
+
+  const heroImageUrl = blogContent?.heroBanner?.imageUrl;
+  const fallbackImageUrl = 'https://images.unsplash.com/photo-1488646953014-85cb44e25828?q=80&w=2070&auto-format&fit=crop';
+
   const categories = useMemo(() => {
     if (!blogs) return ["All"];
-    // Using 'tag' field from schema as category
     return ["All", ...new Set(blogs.map(post => post.tag))];
   }, [blogs]);
   
@@ -73,12 +70,12 @@ export default function Blogs() {
 
   return (
     <div className="pt-0 bg-white min-h-screen">
-      {/* Hero Section (No changes needed here) */}
       <section className="relative h-[100vh] flex items-center justify-center overflow-hidden -mt-16 bg-black">
         <div
           className="absolute inset-0 z-0 opacity-70"
           style={{
-            backgroundImage: `url('https://images.unsplash.com/photo-1488646953014-85cb44e25828?q=80&w=2070&auto=format&fit=crop')`,
+            // --- 3. USE THE DYNAMIC IMAGE URL ---
+            backgroundImage: `url(${heroImageUrl || fallbackImageUrl})`,
             backgroundSize: 'cover',
             backgroundPosition: 'center',
           }}
@@ -138,7 +135,6 @@ export default function Blogs() {
         </div>
       </section>
 
-      {/* Blog Post Grid */}
       <section ref={blogSectionRef} className="py-16 px-4 bg-[#dcf0ff]">
         <div className="max-w-7xl mx-auto">
           {isLoadingBlogs && <p className="text-center">Loading blogs...</p>}
@@ -146,7 +142,7 @@ export default function Blogs() {
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
             {blogs && filteredPosts.map((post, index) => (
               <motion.div
-                key={post.blogId} // Use blogId for key
+                key={post.blogId}
                 initial={{ opacity: 0, y: 30 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.5, delay: index * 0.1 }}
@@ -164,7 +160,6 @@ export default function Blogs() {
         </div>
       </section>
 
-      {/* --- UPDATED: Podcasts Section --- */}
       <section className="py-24 px-4 bg-yellow-50">
         <div className="max-w-7xl mx-auto">
           <div className="text-center mb-12">
@@ -184,7 +179,6 @@ export default function Blogs() {
       </section>
       
       <Newsletter />
-      {/* Popular Topics Section (No changes needed) */}
     </div>
   );
 }

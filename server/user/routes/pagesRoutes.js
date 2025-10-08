@@ -26,4 +26,8 @@ router.get('/domestic', pagesController.getDomesticPageContent);
 // GET /api/pages/international - Get international page content
 router.get('/international', pagesController.getInternationalPageContent);
 
+// --- ADDED: New route for blog page banner content ---
+// GET /api/pages/blog - Get blog page content
+router.get('/blog', pagesController.getBlogPageContent);
+
 module.exports = router;
