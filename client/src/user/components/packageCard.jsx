@@ -35,7 +35,8 @@ const PackageCard = ({
     startingFromPrice, itinerary, tag, cardImage
   } = packageData;
 
-  const itineraryDay1 = itinerary && itinerary.length > 0 ? itinerary[0].description : "Details available upon request.";
+  // MODIFICATION: No longer defaults to a string, allowing for falsy checks.
+  const itineraryDay1 = itinerary?.[0]?.description; 
   const peakSeason = bestTime?.peakSeason;
   const midSeason = bestTime?.midSeason;
 
@@ -71,69 +72,83 @@ const PackageCard = ({
         style={{ height: 'auto' }}
       >
         <div className="relative h-48 overflow-hidden flex-shrink-0">
-          <img src={cardImage || '/placeholder.svg'} alt={name} className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500"/>
+          <img src={cardImage || '/placeholder.svg'} alt={name || 'Travel Package'} className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500"/>
           {tag && <div className="absolute top-3 right-3"><span className={`px-3 py-1 rounded-full text-xs font-medium capitalize ${styles.typeTag}`}>{tag}</span></div>}
         </div>
 
         <div className="p-4 space-y-2 flex flex-col flex-grow">
-          {/* --- MODIFICATION: Title truncation is now conditional on 'showMore' state --- */}
-          <div><h3 className={`text-lg font-bold text-gray-800 mb-1 ${!showMore ? 'truncate' : ''}`}>{name}</h3></div>
+          <div>
+            {/* MODIFICATION: Displays a dash if the name is empty */}
+            <h3 className={`text-lg font-bold text-gray-800 mb-1 ${!showMore ? 'truncate' : ''}`}>{name || '-'}</h3>
+          </div>
 
           <div className="mb-2">
-            {shortDescription && shortDescription.length > 95 && !showMore ? (
-              <p className="text-gray-600 text-sm">{truncateText(shortDescription, 95)}... <button onClick={() => setShowMore(true)} className="text-blue-600 hover:text-blue-700 font-medium whitespace-nowrap">Show More</button></p>
-            ) : (
-              <p className="text-gray-600 text-sm">{shortDescription}{shortDescription && shortDescription.length > 95 && showMore && (<> <button onClick={() => setShowMore(false)} className="text-blue-600 hover:text-blue-700 font-medium whitespace-nowrap">Show Less</button></>)}</p>
-            )}
+            {/* MODIFICATION: Renders the paragraph tag regardless, showing a dash if description is empty */}
+            <p className="text-gray-600 text-sm">
+              {!shortDescription ? '-' : (
+                showMore || shortDescription.length <= 95 ? (
+                  <>
+                    {shortDescription}
+                    {shortDescription.length > 95 && showMore && (
+                      <> <button onClick={() => setShowMore(false)} className="text-blue-600 hover:text-blue-700 font-medium whitespace-nowrap">Show Less</button></>
+                    )}
+                  </>
+                ) : (
+                  <>
+                    {truncateText(shortDescription, 95)}... 
+                    <button onClick={() => setShowMore(true)} className="text-blue-600 hover:text-blue-700 font-medium whitespace-nowrap">Show More</button>
+                  </>
+                )
+              )}
+            </p>
           </div>
 
+          {/* MODIFICATION: All detail rows are now rendered unconditionally, with a dash for empty values */}
           <div className="space-y-2">
-            {duration && (
-              <div className="flex items-start space-x-2 text-sm text-gray-600">
-                <Calendar size={16} className="text-blue-500 flex-shrink-0 mt-0.5" />
-                <p className={!showMore ? "truncate" : ""}>
-                  <strong>Duration:</strong> {duration}
-                </p>
-              </div>
-            )}
-            {placesCovered && (
-              <div className="flex items-start space-x-2 text-sm text-gray-600">
-                <MapPin size={16} className="text-blue-500 flex-shrink-0 mt-0.5" />
-                <p className={!showMore ? "truncate" : ""}>
-                  <strong>Places:</strong> {placesCovered}
-                </p>
-              </div>
-            )}
-            {peakSeason && (
-              <div className="flex items-start space-x-2 text-sm text-gray-600">
-                <TrendingUp size={16} className="text-red-500 flex-shrink-0 mt-0.5" />
-                <p className={!showMore ? "truncate" : ""}>
-                  <strong>Peak Season:</strong> {peakSeason}
-                </p>
-              </div>
-            )}
-            {midSeason && (
-              <div className="flex items-start space-x-2 text-sm text-gray-600">
-                <Star size={16} className="text-orange-500 flex-shrink-0 mt-0.5" />
-                <p className={!showMore ? "truncate" : ""}>
-                  <strong>Mid Season:</strong> {midSeason}
-                </p>
-              </div>
-            )}
-            {itineraryDay1 && (
-              <div className="bg-gray-50 p-3 rounded-lg">
-                <h4 className="flex items-center space-x-2 font-medium text-gray-800 text-sm mb-1">
-                  <FileText size={16} className="text-blue-500 flex-shrink-0" />
-                  <span>Day 1 Itinerary</span>
-                </h4>
-                <p className={`text-xs text-gray-600 ml-6 ${!showMore ? 'truncate' : ''}`}>
-                  {itineraryDay1}
-                </p>
-              </div>
-            )}
+            <div className="flex items-start space-x-2 text-sm text-gray-600">
+              <Calendar size={16} className="text-blue-500 flex-shrink-0 mt-0.5" />
+              <p className={!showMore ? "truncate" : ""}>
+                <strong>Duration:</strong> {duration || '-'}
+              </p>
+            </div>
+            
+            <div className="flex items-start space-x-2 text-sm text-gray-600">
+              <MapPin size={16} className="text-blue-500 flex-shrink-0 mt-0.5" />
+              <p className={!showMore ? "truncate" : ""}>
+                <strong>Places:</strong> {placesCovered || '-'}
+              </p>
+            </div>
+            
+            <div className="flex items-start space-x-2 text-sm text-gray-600">
+              <TrendingUp size={16} className="text-red-500 flex-shrink-0 mt-0.5" />
+              <p className={!showMore ? "truncate" : ""}>
+                <strong>Peak Season:</strong> {peakSeason || '-'}
+              </p>
+            </div>
+            
+            <div className="flex items-start space-x-2 text-sm text-gray-600">
+              <Star size={16} className="text-orange-500 flex-shrink-0 mt-0.5" />
+              <p className={!showMore ? "truncate" : ""}>
+                <strong>Mid Season:</strong> {midSeason || '-'}
+              </p>
+            </div>
+            
+            <div className="bg-gray-50 p-3 rounded-lg">
+              <h4 className="flex items-center space-x-2 font-medium text-gray-800 text-sm mb-1">
+                <FileText size={16} className="text-blue-500 flex-shrink-0" />
+                <span>Day 1 Itinerary</span>
+              </h4>
+              <p className={`text-xs text-gray-600 ml-6 ${!showMore ? 'truncate' : ''}`}>
+                {itineraryDay1 || '-'}
+              </p>
+            </div>
           </div>
            
-          {startingFromPrice && (<div className="flex items-center space-x-2 text-lg text-blue-600 font-semibold mt-2"><IndianRupee size={18} className="text-green-600 flex-shrink-0" /><span>{startingFromPrice}</span></div>)}
+          {/* MODIFICATION: Displays the price row unconditionally */}
+          <div className="flex items-center space-x-2 text-lg text-blue-600 font-semibold mt-2">
+            <IndianRupee size={18} className="text-green-600 flex-shrink-0" />
+            <span>{startingFromPrice || '-'}</span>
+          </div>
           
           <div className="mt-auto pt-3">
             <button
