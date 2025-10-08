@@ -35,10 +35,11 @@ const PackageCard = ({
     startingFromPrice, itinerary, tag, cardImage
   } = packageData;
 
-  // MODIFICATION: No longer defaults to a string, allowing for falsy checks.
   const itineraryDay1 = itinerary?.[0]?.description; 
   const peakSeason = bestTime?.peakSeason;
   const midSeason = bestTime?.midSeason;
+  // --- ONLY ADDITION 1: Added variable for the 'notes' field ---
+  const bestTimeToVisitNotes = bestTime?.notes;
 
   const styles = {
     card: "bg-white rounded-2xl shadow-lg border border-gray-200 overflow-hidden hover:shadow-xl transition-all duration-300",
@@ -48,16 +49,13 @@ const PackageCard = ({
     button: "bg-blue-600 hover:bg-blue-700 text-white"
   };
 
-  // It now checks if the package is unlocked before navigating
   const handleGetDetailsClick = (e) => {
     e.stopPropagation();
     const unlockedPackages = getUnlockedPackages();
 
     if (unlockedPackages.includes(_id)) {
-      // If package ID is found, navigate directly
       navigate(`/packages/${_id}`);
     } else {
-      // Otherwise, show the inquiry form
       setShowInquiry(true);
     }
   };
@@ -78,12 +76,10 @@ const PackageCard = ({
 
         <div className="p-4 space-y-2 flex flex-col flex-grow">
           <div>
-            {/* MODIFICATION: Displays a dash if the name is empty */}
             <h3 className={`text-lg font-bold text-gray-800 mb-1 ${!showMore ? 'truncate' : ''}`}>{name || '-'}</h3>
           </div>
 
           <div className="mb-2">
-            {/* MODIFICATION: Renders the paragraph tag regardless, showing a dash if description is empty */}
             <p className="text-gray-600 text-sm">
               {!shortDescription ? '-' : (
                 showMore || shortDescription.length <= 95 ? (
@@ -103,7 +99,6 @@ const PackageCard = ({
             </p>
           </div>
 
-          {/* MODIFICATION: All detail rows are now rendered unconditionally, with a dash for empty values */}
           <div className="space-y-2">
             <div className="flex items-start space-x-2 text-sm text-gray-600">
               <Calendar size={16} className="text-blue-500 flex-shrink-0 mt-0.5" />
@@ -116,6 +111,14 @@ const PackageCard = ({
               <MapPin size={16} className="text-blue-500 flex-shrink-0 mt-0.5" />
               <p className={!showMore ? "truncate" : ""}>
                 <strong>Places:</strong> {placesCovered || '-'}
+              </p>
+            </div>
+
+            {/* --- ONLY ADDITION 2: Added the 'Best Time to Visit' field --- */}
+            <div className="flex items-start space-x-2 text-sm text-gray-600">
+              <Sun size={16} className="text-green-500 flex-shrink-0 mt-0.5" />
+              <p className={!showMore ? "truncate" : ""}>
+                <strong>Best Time to Visit:</strong> {bestTimeToVisitNotes || '-'}
               </p>
             </div>
             
@@ -144,7 +147,6 @@ const PackageCard = ({
             </div>
           </div>
            
-          {/* MODIFICATION: Displays the price row unconditionally */}
           <div className="flex items-center space-x-2 text-lg text-blue-600 font-semibold mt-2">
             <IndianRupee size={18} className="text-green-600 flex-shrink-0" />
             <span>{startingFromPrice || '-'}</span>

@@ -27,10 +27,11 @@ const Highlights = ({ highlights }) => {
           <div key={index} className="border-l-4 border-purple-500 pl-6 py-2">
             <h3 className="text-xl font-bold text-gray-800 mb-4">{highlight.title}</h3>
             <ul className="space-y-3">
-              {highlight.items && highlight.items.map((item, itemIndex) => (
-                <li key={itemIndex} className="flex items-start space-x-3">
+              {/* --- FIX: Changed 'highlight.items' to 'highlight.bullets' --- */}
+              {highlight.bullets && highlight.bullets.map((bullet, bulletIndex) => (
+                <li key={bulletIndex} className="flex items-start space-x-3">
                   <span className="text-purple-500 mt-1 flex-shrink-0">•</span>
-                  <span className="text-gray-700 leading-relaxed">{item}</span>
+                  <span className="text-gray-700 leading-relaxed">{bullet}</span>
                 </li>
               ))}
             </ul>

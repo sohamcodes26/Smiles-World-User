@@ -72,7 +72,7 @@ const InquiryModal = ({
 
     try {
       const response = await submitPackageEnquiry(enquiryPayload);
-      alert(response.message || "Inquiry sent successfully!");
+      // alert(response.message || "Inquiry sent successfully!");
       
       // --- FIX: Use _id to unlock the package ---
       addUnlockedPackage(packageData._id);
