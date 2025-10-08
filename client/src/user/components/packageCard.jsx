@@ -4,7 +4,6 @@ import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import InquiryModal from "./inquiryModal";
 
-// --- ADD THIS HELPER FUNCTION ---
 // Reads the list of unlocked package IDs from Local Storage
 const getUnlockedPackages = () => {
   try {
@@ -48,7 +47,6 @@ const PackageCard = ({
     button: "bg-blue-600 hover:bg-blue-700 text-white"
   };
 
-  // --- UPDATE THIS FUNCTION ---
   // It now checks if the package is unlocked before navigating
   const handleGetDetailsClick = (e) => {
     e.stopPropagation();
@@ -70,7 +68,7 @@ const PackageCard = ({
         animate={{ opacity: 1, y: 0 }}
         transition={{ delay }}
         className={`${styles.card} group flex flex-col`}
-        style={{ height: showMore ? 'auto' : undefined }}
+        style={{ height: 'auto' }}
       >
         <div className="relative h-48 overflow-hidden flex-shrink-0">
           <img src={cardImage || '/placeholder.svg'} alt={name} className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500"/>
@@ -78,7 +76,8 @@ const PackageCard = ({
         </div>
 
         <div className="p-4 space-y-2 flex flex-col flex-grow">
-          <div><h3 className="text-lg font-bold text-gray-800 mb-1">{name}</h3></div>
+          {/* --- MODIFICATION: Title truncation is now conditional on 'showMore' state --- */}
+          <div><h3 className={`text-lg font-bold text-gray-800 mb-1 ${!showMore ? 'truncate' : ''}`}>{name}</h3></div>
 
           <div className="mb-2">
             {shortDescription && shortDescription.length > 95 && !showMore ? (
@@ -89,11 +88,49 @@ const PackageCard = ({
           </div>
 
           <div className="space-y-2">
-            {duration && (<div className="flex items-center space-x-2 text-sm text-gray-600"><Calendar size={16} className="text-blue-500 flex-shrink-0" /><span><strong>Duration:</strong> {duration}</span></div>)}
-            {placesCovered && (<div className="flex items-center space-x-2 text-sm text-gray-600"><MapPin size={16} className="text-blue-500 flex-shrink-0" /><span><strong>Places:</strong> {placesCovered}</span></div>)}
-            {peakSeason && (<div className="flex items-center space-x-2 text-sm text-gray-600"><TrendingUp size={16} className="text-red-500 flex-shrink-0" /><span><strong>Peak Season:</strong> {peakSeason}</span></div>)}
-            {midSeason && (<div className="flex items-center space-x-2 text-sm text-gray-600"><Star size={16} className="text-orange-500 flex-shrink-0" /><span><strong>Mid Season:</strong> {midSeason}</span></div>)}
-            {itineraryDay1 && (<div className="bg-gray-50 p-3 rounded-lg"><h4 className="flex items-center space-x-2 font-medium text-gray-800 text-sm mb-1"><FileText size={16} className="text-blue-500 flex-shrink-0" /><span>Day 1 Itinerary</span></h4><p className="text-xs text-gray-600 ml-6 line-clamp-2">{itineraryDay1}</p></div>)}
+            {duration && (
+              <div className="flex items-start space-x-2 text-sm text-gray-600">
+                <Calendar size={16} className="text-blue-500 flex-shrink-0 mt-0.5" />
+                <p className={!showMore ? "truncate" : ""}>
+                  <strong>Duration:</strong> {duration}
+                </p>
+              </div>
+            )}
+            {placesCovered && (
+              <div className="flex items-start space-x-2 text-sm text-gray-600">
+                <MapPin size={16} className="text-blue-500 flex-shrink-0 mt-0.5" />
+                <p className={!showMore ? "truncate" : ""}>
+                  <strong>Places:</strong> {placesCovered}
+                </p>
+              </div>
+            )}
+            {peakSeason && (
+              <div className="flex items-start space-x-2 text-sm text-gray-600">
+                <TrendingUp size={16} className="text-red-500 flex-shrink-0 mt-0.5" />
+                <p className={!showMore ? "truncate" : ""}>
+                  <strong>Peak Season:</strong> {peakSeason}
+                </p>
+              </div>
+            )}
+            {midSeason && (
+              <div className="flex items-start space-x-2 text-sm text-gray-600">
+                <Star size={16} className="text-orange-500 flex-shrink-0 mt-0.5" />
+                <p className={!showMore ? "truncate" : ""}>
+                  <strong>Mid Season:</strong> {midSeason}
+                </p>
+              </div>
+            )}
+            {itineraryDay1 && (
+              <div className="bg-gray-50 p-3 rounded-lg">
+                <h4 className="flex items-center space-x-2 font-medium text-gray-800 text-sm mb-1">
+                  <FileText size={16} className="text-blue-500 flex-shrink-0" />
+                  <span>Day 1 Itinerary</span>
+                </h4>
+                <p className={`text-xs text-gray-600 ml-6 ${!showMore ? 'truncate' : ''}`}>
+                  {itineraryDay1}
+                </p>
+              </div>
+            )}
           </div>
            
           {startingFromPrice && (<div className="flex items-center space-x-2 text-lg text-blue-600 font-semibold mt-2"><IndianRupee size={18} className="text-green-600 flex-shrink-0" /><span>{startingFromPrice}</span></div>)}
