@@ -4,8 +4,6 @@ import { Link } from "react-router-dom";
 import PackageCard from "../components/packageCard";
 import InfoCard from "../components/infoCard";
 import { useFeaturedPackages } from "../hooks/usePackages";
-
-// --- 1. IMPORT THE BANNER HOOK ---
 import { useHomeBanner } from "../hooks/useHeroBanner.jsx";
 
 const features = [
@@ -28,12 +26,9 @@ const features = [
 
 export default function Home() {
   const { data: featuredPackages, isLoading, isError } = useFeaturedPackages();
-  
-  // --- 2. CALL THE BANNER HOOK ---
   const { data: homeContent } = useHomeBanner();
   
   const heroImageUrl = homeContent?.heroBanner?.imageUrl;
-  const fallbackImageUrl = 'https://images.unsplash.com/photo-1501785888041-af3ef285b470?q=80&w=2070&auto=format&fit=crop';
 
   return (
     <>
@@ -41,8 +36,8 @@ export default function Home() {
         <div
           className="absolute inset-0 z-0"
           style={{
-            // --- 3. USE THE DYNAMIC IMAGE URL ---
-            backgroundImage: `url(${heroImageUrl || fallbackImageUrl})`,
+            backgroundImage: heroImageUrl ? `url(${heroImageUrl})` : 'none',
+            backgroundColor: '#6B7280', // A neutral gray background color
             backgroundSize: 'cover',
             backgroundPosition: 'center',
           }}
