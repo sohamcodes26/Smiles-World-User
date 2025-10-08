@@ -90,7 +90,7 @@ export default function About() {
                             viewport={{ once: true }}
                             className="lg:col-span-2"
                         >
-                            <div className="aspect-square bg-gradient-to-br from-violet-400 to-purple-500 rounded-3xl shadow-lg shadow-purple-500/20 flex flex-col items-center justify-center text-center p-8">
+                            <div className="aspect-square bg-gradient-to-br from-[#5959ab] to-[#0f0f5b] rounded-3xl shadow-lg shadow-purple-500/20 flex flex-col items-center justify-center text-center p-8">
                                 
                                 {/* --- FIX: WRAPPED IN A REACT FRAGMENT --- */}
                                 <>
