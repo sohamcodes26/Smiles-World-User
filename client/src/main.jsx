@@ -4,6 +4,7 @@ import { BrowserRouter } from 'react-router-dom';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import App from './App';
 import './index.css';
+import "@fontsource/montserrat/800.css";
 
 // 1. Create a new instance of QueryClient
 const queryClient = new QueryClient();

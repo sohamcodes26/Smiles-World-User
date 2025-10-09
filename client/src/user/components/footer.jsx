@@ -37,10 +37,10 @@ export function Footer() {
         <div className="text-center space-y-4">
           <div className="flex items-center justify-center space-x-2">
             <img src={logo} alt="Smiles World Logo" className="w-8 sm:w-10 h-8 sm:h-10" />
-            <span className="text-2xl sm:text-3xl font-bold text-primary">Smiles World</span>
+            <span className="text-2xl sm:text-3xl font-bold text-[#04153c]">Smiles World</span>
           </div>
           <p className="text-muted-foreground text-base sm:text-lg px-4 text-[#5d5b5b]">
-            Explore more. Smile wider.
+            <span className="text-[#ff0c91]">Explore more.</span> <span className="text-[#eeb832]">Smile wider.</span>
           </p>
 
           {/* --- SOCIAL MEDIA SECTION --- */}

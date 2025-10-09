@@ -3,6 +3,7 @@ import { Navbar } from './user/components/navbar';
 import { Footer } from './user/components/footer';
 import { AppRoutes } from './routes/Routes'; 
 import ScrollToTop from './components/ScrollToTop';
+import './App.css'
 
 function App() {
   return (

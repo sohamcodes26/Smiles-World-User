@@ -31,7 +31,7 @@ export function Navbar() {
               className="flex items-center space-x-2"
             >
               <img src={logo} alt="Smiles World Logo" className="w-8 h-8" />
-              <span className="text-2xl font-bold text-white whitespace-nowrap">Smiles World</span>
+              <span className="text-2xl font-bold  whitespace-nowrap text-[#04153c]">Smiles World</span>
             </motion.div>
           </Link>
 
