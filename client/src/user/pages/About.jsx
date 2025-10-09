@@ -171,7 +171,7 @@ export default function About() {
                                     Our Vision
                                 </h3>
                                 <p className="text-xl text-muted-foreground">
-                                    Our vision is to create a global community of happy travelers by delivering innovative, personalized, and memorable journeys.
+                                    {content.storyAndMission.vision.text}
                                 </p>
                             </div>
                         </motion.div>

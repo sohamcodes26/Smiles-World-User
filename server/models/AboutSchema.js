@@ -25,6 +25,9 @@ const AboutSchema = new mongoose.Schema({
         mission: {
             text: { type: String }
         },
+        vision: {
+            text: { type: String }
+        },
         profilePhoto: {
             imageUrl: { type: String, default: '' }
         }
