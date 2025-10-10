@@ -18,9 +18,25 @@ const popularTopicsData = [
   { topic: "Photography", emoji: "📸", count: "15 articles" },
 ];
 
-// --- FIXED PODCASTCARD COMPONENT ---
 const PodcastCard = ({ podcast }) => {
   const [showMore, setShowMore] = useState(false);
+
+  const getYoutubeVideoId = (url) => {
+    if (!url) return null;
+    // Updated regex to handle various YouTube URL formats, including /live/ and short links
+    const regExp = /(?:https?:\/\/)?(?:www\.)?(?:m\.)?(?:youtube\.com|youtu\.be)\/(?:watch\?v=|embed\/|v\/|.+\?v=)?(?:live\/)?([^#\&\?]*).*/;
+    const match = url.match(regExp);
+    return (match && match[1].length === 11) ? match[1] : null; // Ensure ID is 11 characters
+  };
+  
+  if (!getYoutubeVideoId(podcast.videoLink)) {
+    console.warn(`Invalid or missing YouTube link for podcast titled "${podcast.title}":`, podcast.videoLink);
+  }
+
+  const videoId = getYoutubeVideoId(podcast.videoLink);
+  const thumbnailUrl = videoId
+    ? `https://img.youtube.com/vi/${videoId}/hqdefault.jpg`
+    : "https://via.placeholder.com/400x250?text=Podcast";
 
   const truncateText = (text, maxLength) => {
     if (!text || text.length <= maxLength) return text;
@@ -30,14 +46,14 @@ const PodcastCard = ({ podcast }) => {
   };
 
   const description = podcast.description || '';
-  const MAX_LENGTH = 150; // Adjust this to control when "Show More" appears
+  const MAX_LENGTH = 150;
 
   return (
     <div className="bg-white rounded-2xl shadow-lg overflow-hidden flex flex-col group transition-all duration-300 hover:shadow-2xl hover:-translate-y-2">
-      <img 
-        src={podcast.thumbnailUrl || "https://via.placeholder.com/400x250?text=Podcast"} 
-        alt={podcast.title} 
-        className="w-full h-48 object-cover" 
+      <img
+        src={thumbnailUrl}
+        alt={podcast.title}
+        className="w-full h-48 object-cover"
       />
       <div className="p-6 flex flex-col flex-grow">
         <h3 className="text-xl font-bold text-[#2A3A5B] mt-2">
@@ -56,7 +72,7 @@ const PodcastCard = ({ podcast }) => {
                 </>
               ) : (
                 <>
-                  {truncateText(description, MAX_LENGTH)}... 
+                  {truncateText(description, MAX_LENGTH)}...
                   <button onClick={() => setShowMore(true)} className="text-orange-500 hover:text-orange-600 font-semibold whitespace-nowrap">Show More</button>
                 </>
               )
@@ -68,7 +84,7 @@ const PodcastCard = ({ podcast }) => {
           to={`/podcast/${podcast.podcastId}`}
           className="mt-6 w-full px-4 py-2 font-semibold rounded-full text-white bg-orange-500 hover:bg-orange-600 transition-colors shadow-lg flex items-center justify-center gap-2 text-center"
         >
-          <PlayCircle size={20} /> Play Now
+          <PlayCircle size={20} /> Watch Now
         </Link>
       </div>
     </div>

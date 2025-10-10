@@ -21,8 +21,7 @@
     "react-dom": "^19.1.1",
     "react-router-dom": "^7.9.3",
     "tailwindcss": "^4.1.14",
-    "video.js": "^7.21.4",
-    "videojs-contrib-quality-levels": "^3.0.0",
+    "video.js": "^8.10.0",
     "videojs-hls-quality-selector": "^1.1.4"
   },
   "devDependencies": {

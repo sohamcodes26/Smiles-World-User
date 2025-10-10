@@ -1,16 +1,22 @@
-// src/pages/PodcastPage.jsx
-
 import React from 'react';
 import { useParams, Link } from 'react-router-dom';
 import { Calendar } from 'lucide-react';
-import { usePodcast } from '../hooks/usePodcast'; // Adjust path if needed
-import VideoPlayer from '../components/VideoPlayer'; // <-- IMPORT THE NEW PLAYER
+import { usePodcast } from '../hooks/usePodcast';
 
 export const PodcastPage = () => {
-  const { podcastId } = useParams(); // Gets the ID from the URL
-  
-  // Fetch data for a single podcast
+  const { podcastId } = useParams();
+
   const { data: podcast, isLoading, isError } = usePodcast(podcastId);
+
+  const getYoutubeEmbedUrl = (url) => {
+    if (!url) return null;
+    // Updated regex to handle various YouTube URL formats, including /live/ and short links
+    const regExp = /(?:https?:\/\/)?(?:www\.)?(?:m\.)?(?:youtube\.com|youtu\.be)\/(?:watch\?v=|embed\/|v\/|.+\?v=)?(?:live\/)?([^#\&\?]*).*/;
+    const match = url.match(regExp);
+    const videoId = (match && match[1].length === 11) ? match[1] : null; // Ensure ID is 11 characters
+    console.log("Extracted video ID:", videoId); // Debugging line
+    return videoId ? `https://www.youtube.com/embed/${videoId}` : null;
+  };
 
   if (isLoading) {
     return (
@@ -30,24 +36,13 @@ export const PodcastPage = () => {
     );
   }
 
-  // Define the options for the Video.js player
-  const videoPlayerOptions = {
-    autoplay: false,
-    controls: true,
-    responsive: true,
-    fluid: true,
-    poster: podcast.thumbnailUrl, // The thumbnail image
-    sources: [{
-      src: podcast.manifestUrl, // The HLS manifest URL from your database
-      type: 'application/x-mpegURL' // This MIME type is for HLS playlists
-    }]
-  };
+  console.log("Attempting to load video from this link:", podcast.videoLink);
+  const embedUrl = getYoutubeEmbedUrl(podcast.videoLink);
 
   return (
     <div className="pt-16 bg-gray-50 min-h-screen">
       <div className="max-w-4xl mx-auto py-16 px-4">
-        
-        {/* Header */}
+
         <div className="mb-8">
           <h1 className="text-4xl md:text-5xl font-bold text-[#2A3A5B]">{podcast.title}</h1>
           <div className="flex items-center gap-6 mt-4 text-slate-500">
@@ -57,12 +52,23 @@ export const PodcastPage = () => {
           </div>
         </div>
 
-        {/* Video Player Section - Replaced with the new component */}
-        <div className="w-full aspect-video bg-black rounded-2xl shadow-lg overflow-hidden mb-8">
-          <VideoPlayer options={videoPlayerOptions} />
+        <div className="w-full aspect-video rounded-2xl shadow-lg overflow-hidden mb-8 bg-black">
+          {embedUrl ? (
+            <iframe
+              className="w-full h-full"
+              src={embedUrl}
+              title={podcast.title}
+              frameBorder="0"
+              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+              allowFullScreen
+            ></iframe>
+          ) : (
+            <div className="flex items-center justify-center h-full">
+              <p className="text-white">Video could not be loaded.</p>
+            </div>
+          )}
         </div>
 
-        {/* Podcast Description */}
         <div className="prose lg:prose-lg max-w-none">
           <h2 className="text-2xl font-bold text-[#2A3A5B]">About this episode</h2>
           <p>{podcast.description}</p>

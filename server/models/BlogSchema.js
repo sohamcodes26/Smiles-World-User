@@ -16,10 +16,10 @@ const PodcastItemSchema = new mongoose.Schema({
     podcastId: mongoose.Schema.Types.ObjectId,
     title: { type: String },
     description: { type: String },
-    manifestUrl: { type: String }, // Stores video URL from Cloudinary
+    videoLink: { type: String }, // Stores the video link
     publishDate: { type: Date },
-    thumbnailUrl: { type: String }
 }, { _id: false });
+
 
 const BlogPageSchema = new mongoose.Schema({
     _id: { 
