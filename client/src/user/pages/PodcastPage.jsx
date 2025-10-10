@@ -40,8 +40,8 @@ export const PodcastPage = () => {
   const embedUrl = getYoutubeEmbedUrl(podcast.videoLink);
 
   return (
-    <div className="pt-16 bg-gray-50 min-h-screen">
-      <div className="max-w-4xl mx-auto py-16 px-4">
+    <div className="pt-3 bg-gray-50 min-h-screen">
+      <div className="max-w-4xl mx-auto py-8 pt-4 px-4">
 
         <div className="mb-8">
           <h1 className="text-4xl md:text-5xl font-bold text-[#2A3A5B]">{podcast.title}</h1>
