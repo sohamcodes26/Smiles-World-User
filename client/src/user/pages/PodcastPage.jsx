@@ -1,14 +1,15 @@
+// src/pages/PodcastPage.jsx
+
 import React from 'react';
 import { useParams, Link } from 'react-router-dom';
 import { Calendar } from 'lucide-react';
-
-// --- IMPORT THE HOOK FOR FETCHING A SINGLE PODCAST ---
 import { usePodcast } from '../hooks/usePodcast'; // Adjust path if needed
+import VideoPlayer from '../components/VideoPlayer'; // <-- IMPORT THE NEW PLAYER
 
 export const PodcastPage = () => {
   const { podcastId } = useParams(); // Gets the ID from the URL
   
-  // --- FETCH DATA FOR A SINGLE PODCAST ---
+  // Fetch data for a single podcast
   const { data: podcast, isLoading, isError } = usePodcast(podcastId);
 
   if (isLoading) {
@@ -29,6 +30,19 @@ export const PodcastPage = () => {
     );
   }
 
+  // Define the options for the Video.js player
+  const videoPlayerOptions = {
+    autoplay: false,
+    controls: true,
+    responsive: true,
+    fluid: true,
+    poster: podcast.thumbnailUrl, // The thumbnail image
+    sources: [{
+      src: podcast.manifestUrl, // The HLS manifest URL from your database
+      type: 'application/x-mpegURL' // This MIME type is for HLS playlists
+    }]
+  };
+
   return (
     <div className="pt-16 bg-gray-50 min-h-screen">
       <div className="max-w-4xl mx-auto py-16 px-4">
@@ -43,16 +57,9 @@ export const PodcastPage = () => {
           </div>
         </div>
 
-        {/* Video Player Section */}
+        {/* Video Player Section - Replaced with the new component */}
         <div className="w-full aspect-video bg-black rounded-2xl shadow-lg overflow-hidden mb-8">
-          <video 
-            className="w-full h-full"
-            src={podcast.filePath} // The video URL from your database
-            poster={podcast.thumbnailUrl} // The thumbnail image
-            controls // This enables play, pause, volume, etc.
-          >
-            Your browser does not support the video tag.
-          </video>
+          <VideoPlayer options={videoPlayerOptions} />
         </div>
 
         {/* Podcast Description */}

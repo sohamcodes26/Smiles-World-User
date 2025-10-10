@@ -16,7 +16,7 @@ const PodcastItemSchema = new mongoose.Schema({
     podcastId: mongoose.Schema.Types.ObjectId,
     title: { type: String },
     description: { type: String },
-    filePath: { type: String }, // Stores video URL from Cloudinary
+    manifestUrl: { type: String }, // Stores video URL from Cloudinary
     publishDate: { type: Date },
     thumbnailUrl: { type: String }
 }, { _id: false });
