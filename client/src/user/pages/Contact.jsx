@@ -112,7 +112,7 @@ export default function Contact() {
   }
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-pink-50 to-purple-50">
+    <div className="min-h-screen all-bg-color">
       {/* Hero Section */}
       <section className="py-12 px-4">
         <div className="max-w-4xl mx-auto text-center">
@@ -121,10 +121,10 @@ export default function Contact() {
             animate={{ opacity: 1, y: 0 }}
             className="space-y-6"
           >
-            <h1 className="text-4xl md:text-5xl font-bold text-gray-800">
+            <h1 className="text-4xl md:text-5xl font-bold text-gray-800 all-text-color">
               Get In Touch
             </h1>
-            <p className="text-lg md:text-xl text-gray-600 max-w-3xl mx-auto">
+            <p className="text-lg md:text-xl text-gray-600 max-w-3xl mx-auto all-text-color">
               Have questions about our travel packages? We're here to help!
             </p>
           </motion.div>

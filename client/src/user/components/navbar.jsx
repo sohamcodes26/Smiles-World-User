@@ -21,7 +21,7 @@ export function Navbar() {
   const location = useLocation();
 
   return (
-    <nav className="fixed top-0 w-full z-[100] bg-blue-900/30 backdrop-blur-md border-b border-blue-800/20 shadow-lg">
+    <nav className="fixed top-0 w-full z-[100] bg-[#05143c]/50 backdrop-blur-md border-b border-blue-800/20 shadow-lg">
       <div className="max-w-[1400px] mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex items-center justify-between h-16">
           {/* Logo - Fixed to stay on the left */}
@@ -31,7 +31,11 @@ export function Navbar() {
               className="flex items-center space-x-2"
             >
               <img src={logo} alt="Smiles World Logo" className="w-8 h-8" />
-              <span className="text-2xl font-bold  whitespace-nowrap text-[#04153c]">Smiles World</span>
+              <span class="[filter:drop-shadow(0_2px_2px_rgba(0,0,0,0.8))]">
+  <span class="text-2xl font-bold whitespace-nowrap bg-gradient-to-r from-[#f5d40a] via-[#f98728] to-pink-600 bg-clip-text text-transparent">
+    Smiles World
+  </span>
+</span>
             </motion.div>
           </Link>
 
@@ -50,8 +54,8 @@ export function Navbar() {
                       href={item.href}
                       className={`flex items-center space-x-1 px-3 py-2 rounded-full text-sm font-medium transition-all duration-300 whitespace-nowrap ${
                         isActive
-                          ? "bg-white/20 text-white shadow-md"
-                          : "text-white/90 hover:bg-white/15 hover:text-white"
+                          ? "bg-[#f98728] text-white shadow-md"
+                          : "text-white/90 hover:bg-[#f98728] hover:text-white"
                       }`}
                     >
                       <Icon size={16} />
@@ -66,8 +70,8 @@ export function Navbar() {
                     to={item.href}
                     className={`flex items-center space-x-1 px-3 py-2 rounded-full text-sm font-medium transition-all duration-300 whitespace-nowrap ${
                       isActive
-                        ? "bg-white/20 text-white shadow-md"
-                        : "text-white/90 hover:bg-white/15 hover:text-white"
+                        ? "bg-[#f98728] text-white shadow-md"
+                        : "text-white/90 hover:bg-[#f98728] hover:text-white"
                     }`}
                   >
                     <Icon size={16} />

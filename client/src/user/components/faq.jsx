@@ -32,7 +32,7 @@ const FAQ = ({ faqs = [], title = "❓ Frequently Asked Questions", subtitle = "
   const faqsToDisplay = faqs.length > 0 ? faqs : defaultFaqs;
 
   return (
-    <section className="py-16 px-4 bg-gradient-to-br from-purple-50/30 to-pink-50/30">
+    <section className="py-16 px-4">
       <div className="max-w-6xl mx-auto">
         <motion.div
           className="text-center mb-12"
@@ -40,10 +40,12 @@ const FAQ = ({ faqs = [], title = "❓ Frequently Asked Questions", subtitle = "
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
         >
-          <h2 className="text-3xl md:text-4xl font-bold text-gray-800 mb-4">
+          {/* --- FIX: Added all-text-color class here --- */}
+          <h2 className="text-3xl md:text-4xl font-bold text-gray-800 mb-4 all-text-color">
             {title}
           </h2>
-          <p className="text-lg md:text-xl text-gray-600">
+          {/* --- FIX: Added all-text-color class here --- */}
+          <p className="text-lg md:text-xl text-gray-600 all-text-color">
             {subtitle}
           </p>
         </motion.div>

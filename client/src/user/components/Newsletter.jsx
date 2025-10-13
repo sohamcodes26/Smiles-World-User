@@ -2,7 +2,7 @@ import React from 'react';
 
 const Newsletter = () => {
   return (
-    <section className="py-20 px-4 bg-yellow-50"> {/* Background changed */}
+    <section className="py-20 px-4 bg-yellow-50 all-bg-color"> {/* Background changed */}
       <div className="max-w-4xl mx-auto text-center">
         <div className="space-y-6">
           <h2 className="text-4xl font-bold text-[#2A3A5B]">

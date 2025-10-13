@@ -127,6 +127,7 @@ export default function Blogs() {
 
   return (
     <div className="pt-0 bg-white min-h-screen">
+      {/* Hero Section - Unchanged */}
       <section className="relative h-[100vh] flex items-center justify-center overflow-hidden -mt-16 bg-black">
         <div
           className="absolute inset-0 z-0 opacity-70"
@@ -144,7 +145,7 @@ export default function Blogs() {
             initial={{ opacity: 0, y: 20 }} 
             animate={{ opacity: 1, y: 0 }} 
             transition={{ duration: 0.5 }}
-            className="text-5xl md:text-7xl font-bold text-white tracking-tight"
+            className="text-5xl md:text-7xl font-bold text-white all-text-color tracking-tight"
           >
             Travel Blog
           </motion.h1>
@@ -152,7 +153,7 @@ export default function Blogs() {
             initial={{ opacity: 0, y: 20 }} 
             animate={{ opacity: 1, y: 0 }} 
             transition={{ duration: 0.5, delay: 0.2 }}
-            className="text-xl text-white/90 max-w-2xl mx-auto mt-6"
+            className="text-xl text-white/90 all-text-color max-w-2xl mx-auto mt-6"
           >
             Discover travel tips, destination guides, and inspiring stories from fellow travelers around the world.
           </motion.p>
@@ -199,55 +200,62 @@ export default function Blogs() {
         </div>
       </section>
 
-      <section ref={blogSectionRef} className="py-16 px-4 bg-[#dcf0ff]">
-        <div className="max-w-7xl mx-auto">
-          {isLoadingBlogs && <p className="text-center">Loading blogs...</p>}
-          {isErrorBlogs && <p className="text-center text-red-500">Failed to load blogs.</p>}
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-            {blogs && filteredPosts.map((post, index) => (
-              <motion.div
-                key={post.blogId}
-                initial={{ opacity: 0, y: 30 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.5, delay: index * 0.1 }}
-              >
-                <BlogCard post={post} />
-              </motion.div>
-            ))}
-          </div>
-          {blogs && filteredPosts.length === 0 && !isLoadingBlogs && (
-            <div className="text-center py-12 col-span-full">
-              <h3 className="text-2xl font-bold text-[#2A3A5B]">No articles found</h3>
-              <p className="text-slate-500 mt-2">Try adjusting your search or filter criteria.</p>
+      {/* FIX: Create a single wrapper div for the sections with the shared background */}
+      {/* Assuming bg-[#dcf0ff] is the desired common base background for the content sections */}
+      <div className="bg-[#dcf0ff] all-bg-color">
+        {/* Section 1: Blog Listings */}
+        <section ref={blogSectionRef} className="py-16 px-4">
+          <div className="max-w-7xl mx-auto">
+            {isLoadingBlogs && <p className="text-center">Loading blogs...</p>}
+            {isErrorBlogs && <p className="text-center text-red-500">Failed to load blogs.</p>}
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+              {blogs && filteredPosts.map((post, index) => (
+                <motion.div
+                  key={post.blogId}
+                  initial={{ opacity: 0, y: 30 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ duration: 0.5, delay: index * 0.1 }}
+                >
+                  <BlogCard post={post} />
+                </motion.div>
+              ))}
             </div>
-          )}
-        </div>
-      </section>
+            {blogs && filteredPosts.length === 0 && !isLoadingBlogs && (
+              <div className="text-center py-12 col-span-full">
+                <h3 className="text-2xl font-bold text-[#2A3A5B]">No articles found</h3>
+                <p className="text-slate-500 mt-2">Try adjusting your search or filter criteria.</p>
+              </div>
+            )}
+          </div>
+        </section>
 
-      <section className="py-24 px-4 bg-yellow-50">
-        <div className="max-w-7xl mx-auto">
-          <div className="text-center mb-12">
-            <h2 className="text-4xl font-bold text-[#2A3A5B]">Watch Our Podcasts</h2>
-            <p className="text-lg text-orange-800 mt-4">Insights and stories from the road, delivered to your ears.</p>
+        {/* Section 2: Podcast Listings */}
+        <section className="py-24 px-4">
+          <div className="max-w-7xl mx-auto">
+            <div className="text-center mb-12">
+              <h2 className="text-4xl font-bold text-white all-text-color">Watch Our Podcasts</h2>
+              <p className="text-lg text-white all-text-color mt-4">Insights and stories from the road, delivered to your ears.</p>
+            </div>
+            {isLoadingPodcasts && <p className="text-center">Loading podcasts...</p>}
+            {isErrorPodcasts && <p className="text-center text-red-500">Failed to load podcasts.</p>}
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+              {podcasts && podcasts.map((podcast, index) => (
+                <motion.div 
+                  key={podcast.podcastId} 
+                  initial={{ opacity: 0, y: 30 }} 
+                  animate={{ opacity: 1, y: 0 }} 
+                  transition={{ duration: 0.5, delay: index * 0.1 }}
+                >
+                  <PodcastCard podcast={podcast} />
+                </motion.div>
+              ))}
+            </div>
           </div>
-          {isLoadingPodcasts && <p className="text-center">Loading podcasts...</p>}
-          {isErrorPodcasts && <p className="text-center text-red-500">Failed to load podcasts.</p>}
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-            {podcasts && podcasts.map((podcast, index) => (
-              <motion.div 
-                key={podcast.podcastId} 
-                initial={{ opacity: 0, y: 30 }} 
-                animate={{ opacity: 1, y: 0 }} 
-                transition={{ duration: 0.5, delay: index * 0.1 }}
-              >
-                <PodcastCard podcast={podcast} />
-              </motion.div>
-            ))}
-          </div>
-        </div>
-      </section>
-      
-      <Newsletter />
+        </section>
+        
+        {/* Newsletter (if uncommented) would also fall under this continuous background */}
+        {/* <Newsletter /> */}
+      </div> {/* End of the wrapper div */}
     </div>
   );
 }

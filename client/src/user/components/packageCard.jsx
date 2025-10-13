@@ -49,6 +49,17 @@ const PackageCard = ({
     button: "bg-blue-600 hover:bg-blue-700 text-white"
   };
 
+  const orangeStyles = {
+  card: "bg-white rounded-2xl shadow-lg border border-gray-200 overflow-hidden hover:shadow-xl transition-all duration-300",
+  typeTag: "bg-orange-500 text-white",
+  button: "bg-orange-600 hover:bg-orange-700 text-white"
+};
+
+const navbarOrangeStyle = {
+  card: "bg-white rounded-2xl shadow-lg border border-gray-200 overflow-hidden hover:shadow-xl transition-all duration-300",
+  typeTag: "bg-[#f98728] text-white",
+  button: "bg-[#f98728] hover:brightness-90 text-white font-semibold transition-all"
+};
   const handleGetDetailsClick = (e) => {
     e.stopPropagation();
     const unlockedPackages = getUnlockedPackages();
@@ -155,7 +166,7 @@ const PackageCard = ({
           <div className="mt-auto pt-3">
             <button
               onClick={handleGetDetailsClick}
-              className={`w-full px-4 py-2 rounded-md text-sm font-medium transition-colors ${styles.button}`}
+              className={`w-full px-4 py-2 rounded-md text-sm font-medium transition-colors ${navbarOrangeStyle.button}`}
               type="button"
             >
               Get Full Details

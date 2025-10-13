@@ -101,7 +101,7 @@ export default function Customize() {
   const selectClassName = `${fieldClassName} appearance-none pr-12`;
 
   return (
-    <main className="font-sans text-zinc-800 bg-[#dcf0ff] -mt-16">
+    <main className="font-sans text-zinc-800  bg-[#dcf0ff] all-bg-color -mt-16">
       {/* Hero Section */}
       <section className="py-35 px-4 text-center">
         <motion.div 
@@ -110,8 +110,8 @@ export default function Customize() {
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.4 }}
         >
-          <h1 className="text-5xl md:text-6xl font-bold">Customize Your Dream Trip</h1>
-          <p className="text-xl text-zinc-600 max-w-3xl mx-auto">
+          <h1 className="text-5xl md:text-6xl font-bold all-text-color">Customize Your Dream Trip</h1>
+          <p className="text-xl text-zinc-600 all-text-color max-w-3xl mx-auto">
             Tell us about your travel dreams, and we'll craft the perfect journey just for you.
           </p>
         </motion.div>

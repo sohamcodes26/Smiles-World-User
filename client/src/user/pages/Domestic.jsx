@@ -5,8 +5,6 @@ import PackageCard from "../components/packageCard";
 import InfoCard from "../components/infoCard";
 import { useRef } from "react";
 import { useDomesticPackages } from "../hooks/usePackages";
-
-// --- 1. IMPORT THE BANNER HOOK ---
 import { useDomesticBanner } from "../hooks/useHeroBanner.jsx";
 
 
@@ -33,8 +31,6 @@ export default function Home() {
   const packagesRef = useRef(null);
   
   const { data: domesticTravelPackages, isLoading, isError } = useDomesticPackages();
-
-  // --- 2. CALL THE BANNER HOOK ---
   const { data: domesticContent } = useDomesticBanner();
 
   const heroImageUrl = domesticContent?.heroBanner?.imageUrl;
@@ -49,7 +45,6 @@ export default function Home() {
         <div
           className="absolute inset-0 z-0"
           style={{
-            // --- 3. USE THE DYNAMIC IMAGE URL ---
             backgroundImage: `url(${heroImageUrl || fallbackImageUrl})`,
             backgroundSize: 'cover',
             backgroundPosition: 'center',
@@ -67,7 +62,7 @@ export default function Home() {
           >
             <div className="space-y-4">
               <motion.h1
-                className="text-5xl md:text-7xl font-bold text-white"
+                className="text-5xl md:text-7xl font-bold text-white all-text-color"
                 initial={{ opacity: 0, scale: 0.9 }}
                 animate={{ opacity: 1, scale: 1 }}
                 transition={{ delay: 0.2 }}
@@ -76,7 +71,7 @@ export default function Home() {
               </motion.h1>
 
               <motion.p
-                className="text-2xl md:text-4xl text-white/80"
+                className="text-2xl md:text-4xl text-white/80 all-text-color"
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ delay: 0.4 }}
@@ -86,7 +81,7 @@ export default function Home() {
             </div>
 
             <motion.p
-              className="text-lg md:text-xl text-white/90 max-w-2xl mx-auto"
+              className="text-lg md:text-xl text-white/90 all-text-color max-w-2xl mx-auto"
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               transition={{ delay: 0.6 }}
@@ -113,95 +108,103 @@ export default function Home() {
         </div>
       </section>
 
-      <section ref={packagesRef} className="py-20 px-4 bg-[#dcf0ff]">
-        <div className="max-w-7xl mx-auto">
-          <motion.div
-            className="text-center mb-16"
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-          >
-            <h2 className="text-4xl md:text-5xl font-bold text-gray-800 mb-4">
-              🚂 Domestic Travel Packages
-            </h2>
-            <p className="text-xl text-gray-600 max-w-3xl mx-auto">
-              Hand-picked destinations that promise incredible experiences. Request full details to learn more about any package.
-            </p>
-          </motion.div>
+      {/* FIX: Create a single wrapper div for the sections with the shared background */}
+      <div className="bg-[#dcf0ff] all-bg-color">
+      
+        {/* Section 1: Domestic Packages */}
+        <section ref={packagesRef} className="py-20 px-4">
+          <div className="max-w-7xl mx-auto">
+            <motion.div
+              className="text-center mb-16"
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+            >
+              <h2 className="text-4xl md:text-5xl font-bold text-gray-800 mb-4 all-text-color">
+                🚂 Domestic Travel Packages
+              </h2>
+              <p className="text-xl text-gray-600 max-w-3xl mx-auto all-text-color">
+                Hand-picked destinations that promise incredible experiences. Request full details to learn more about any package.
+              </p>
+            </motion.div>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-            {isLoading && <p className="col-span-full text-center">Loading packages...</p>}
-            {isError && <p className="col-span-full text-center text-red-600">Could not fetch packages. Please try again later.</p>}
-            
-            {domesticTravelPackages && domesticTravelPackages.map((pkg, index) => (
-              <motion.div
-                key={pkg._id}
-                initial={{ opacity: 0, y: 30 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                transition={{ delay: index * 0.1 }}
-              >
-                <PackageCard packageData={pkg} />
-              </motion.div>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      <section className="py-20 px-4 bg-[#dcf0ff]">
-        <div className="max-w-6xl mx-auto">
-          <motion.div
-            className="text-center mb-16"
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-          >
-            <h2 className="text-4xl md:text-5xl font-bold text-gray-800 mb-4">
-              🌟 Why Travel With Us?
-            </h2>
-          </motion.div>
-
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-            {features.map((feature, index) => (
-              <InfoCard
-                key={index}
-                icon={feature.icon}
-                title={feature.title}
-                description={feature.description}
-                delay={index * 0.2}
-              />
-            ))}
-          </div>
-        </div>
-      </section>
-
-      <section className="py-20 px-4 bg-[#dcf0ff]">
-        <div className="max-w-4xl mx-auto text-center">
-          <motion.div
-            initial={{ opacity: 0, y: 30 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            className="bg-white rounded-3xl shadow-xl p-12 border border-gray-200"
-          >
-            <h2 className="text-4xl font-bold text-gray-800 mb-6">
-              Ready for Your Next Adventure?
-            </h2>
-            <p className="text-xl text-gray-600 mb-8">
-              Let us craft the perfect journey just for you. Share your travel dreams and we'll make them reality.
-            </p>
-            <div className="flex flex-col sm:flex-row gap-4 justify-center">
-              <Link to="/customize" className="inline-flex items-center justify-center text-lg px-3 py-2 font-semibold text-white bg-blue-600 rounded-full shadow-lg hover:bg-blue-700 transition-colors">
-                <MapPin className="mr-2" size={20} />
-                Plan My Trip
-              </Link>
-              <Link to="/contact" className="inline-flex items-center justify-center text-lg px-3 py-2 font-semibold text-blue-600 bg-white border-2 border-blue-600 rounded-full hover:bg-blue-50 transition-colors">
-                <Heart className="mr-2" size={18} />
-                Get In Touch
-              </Link>
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+              {isLoading && <p className="col-span-full text-center">Loading packages...</p>}
+              {isError && <p className="col-span-full text-center text-red-600">Could not fetch packages. Please try again later.</p>}
+              
+              {domesticTravelPackages && domesticTravelPackages.map((pkg, index) => (
+                <motion.div
+                  key={pkg._id}
+                  initial={{ opacity: 0, y: 30 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  viewport={{ once: true }}
+                  transition={{ delay: index * 0.1 }}
+                >
+                  <PackageCard packageData={pkg} />
+                </motion.div>
+              ))}
             </div>
-          </motion.div>
-        </div>
-      </section>
+          </div>
+        </section>
+
+        {/* Section 2: Why Travel With Us */}
+        <section className="py-20 px-4">
+          <div className="max-w-6xl mx-auto">
+            <motion.div
+              className="text-center mb-16"
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+            >
+              <h2 className="text-4xl md:text-5xl font-bold text-gray-800 mb-4 all-text-color">
+                🌟 Why Travel With Us?
+              </h2>
+            </motion.div>
+
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+              {features.map((feature, index) => (
+                <InfoCard
+                  key={index}
+                  icon={feature.icon}
+                  title={feature.title}
+                  description={feature.description}
+                  delay={index * 0.2}
+                />
+              ))}
+            </div>
+          </div>
+        </section>
+
+        {/* Section 3: Call to Action */}
+        <section className="py-20 px-4">
+          <div className="max-w-4xl mx-auto text-center">
+            <motion.div
+              initial={{ opacity: 0, y: 30 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              className="bg-white rounded-3xl shadow-xl p-12 border border-gray-200"
+            >
+              <h2 className="text-4xl font-bold text-gray-800 mb-6">
+                Ready for Your Next Adventure?
+              </h2>
+              <p className="text-xl text-gray-600 mb-8">
+                Let us craft the perfect journey just for you. Share your travel dreams and we'll make them reality.
+              </p>
+              <div className="flex flex-col sm:flex-row gap-4 justify-center">
+                <Link to="/customize" className="inline-flex items-center justify-center text-lg px-3 py-2 font-semibold text-white bg-blue-600 rounded-full shadow-lg hover:bg-blue-700 transition-colors">
+                  <MapPin className="mr-2" size={20} />
+                  Plan My Trip
+                </Link>
+                <Link to="/contact" className="inline-flex items-center justify-center text-lg px-3 py-2 font-semibold text-blue-600 bg-white border-2 border-blue-600 rounded-full hover:bg-blue-50 transition-colors">
+                  <Heart className="mr-2" size={18} />
+                  Get In Touch
+                </Link>
+              </div>
+            </motion.div>
+          </div>
+        </section>
+
+      </div> {/* End of the wrapper div */}
     </>
   );
 }

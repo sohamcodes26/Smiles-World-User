@@ -63,7 +63,7 @@ export default function About() {
     const memberIcons = ["🧭", "🌸", "🎭"];
 
     return (
-        <div className="bg-[#dcf0ff] -mt-16">
+        <div className="bg-[#05143c] all-bg-color text-white all-text-color -mt-16">
             <section className="pt-32 pb-20 px-4">
                 <div className="max-w-6xl mx-auto text-center">
                     <motion.div
@@ -71,7 +71,7 @@ export default function About() {
                         animate={{ opacity: 1, y: 0 }}
                         className="space-y-8"
                     >
-                        <h1 className="text-5xl md:text-6xl font-bold text-foreground">
+                        <h1 className="text-5xl md:text-6xl font-bold text-foreground ">
                             About Smiles World
                         </h1>
                         <p className="text-2xl text-muted-foreground max-w-4xl mx-auto">
@@ -90,7 +90,7 @@ export default function About() {
                             viewport={{ once: true }}
                             className="lg:col-span-2"
                         >
-                            <div className="aspect-square bg-gradient-to-br from-[#5959ab] to-[#0f0f5b] rounded-3xl shadow-lg shadow-purple-500/20 flex flex-col items-center justify-center text-center p-8">
+                            <div className="aspect-square bg-gradient-to-br from-[#c3ca00] to-[#e49114] rounded-3xl shadow-lg shadow-purple-500/20 flex flex-col items-center justify-center text-center p-8">
                                 
                                 {/* --- FIX: WRAPPED IN A REACT FRAGMENT --- */}
                                 <>
@@ -150,7 +150,7 @@ export default function About() {
                                 <h3 className="text-4xl font-bold text-black mb-4">
                                     Our Mission
                                 </h3>
-                                <p className="text-xl text-muted-foreground">
+                                <p className="text-xl text-black text-muted-foreground">
                                     {content.storyAndMission.mission.text}
                                 </p>
                             </div>
@@ -170,7 +170,7 @@ export default function About() {
                                 <h3 className="text-4xl font-bold text-black mb-4">
                                     Our Vision
                                 </h3>
-                                <p className="text-xl text-muted-foreground">
+                                <p className="text-xl text-black text-muted-foreground">
                                     {content.storyAndMission.vision.text}
                                 </p>
                             </div>
@@ -205,7 +205,7 @@ export default function About() {
                 </div>
             </section>
 
-            <section className="py-20 px-4">
+            {/* <section className="py-20 px-4">
                 <div className="max-w-6xl mx-auto">
                     <motion.div
                         className="text-center mb-16"
@@ -245,7 +245,7 @@ export default function About() {
                         ))}
                     </div>
                 </div>
-            </section>
+            </section> */}
 
             <section className="py-20 px-4">
                 <div className="max-w-6xl mx-auto">

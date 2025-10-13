@@ -1,0 +1,10 @@
+.all-bg-color{
+    /* background-color: red; */
+
+    /* background: linear-gradient(to right,#f98728,  #05143c,  #EC4899); */
+     background: linear-gradient(to bottom right, #05143c, #0a2777, #123eb8);
+}
+
+.all-text-color{
+    color: white;
+}

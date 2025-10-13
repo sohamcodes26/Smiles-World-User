@@ -41,7 +41,7 @@ export default function GroupDeparture() {
   const filteredDepartures = groupDepartures?.filter(departure => departure.tag === selectedType);
 
   return (
-    <div className="w-full min-h-screen -mt-16 bg-gradient-to-br from-orange-200 via-orange-300 to-orange-400">
+    <div className="w-full min-h-screen -mt-16 all-bg-color  ">
       <section className="relative h-screen w-full flex items-center justify-center overflow-hidden">
         <div 
           className="absolute inset-0 z-0"

@@ -23,11 +23,11 @@ const policyLinks = [
 
 // --- SOCIAL MEDIA LINKS ADDED ---
 const socialLinks = [
-  { name: "Instagram", href: "#", icon: Instagram, color: "#E4405F" },
-  { name: "Facebook", href: "#", icon: Facebook, color: "#1877F2" },
-  { name: "Twitter", href: "#", icon: Twitter, color: "#1DA1F2" },
-  { name: "YouTube", href: "#", icon: Youtube, color: "#FF0000" },
-  { name: "LinkedIn", href: "#", icon: Linkedin, color: "#0A66C2" },
+  { name: "Instagram", href: "https://www.instagram.com/smilesworld10?igsh=MXA0MW02b21qc3IyNw==", icon: Instagram, color: "#E4405F" },
+  { name: "Facebook", href: "Facebook/smilesworldpune", icon: Facebook, color: "#1877F2" },
+  // { name: "Twitter", href: "#", icon: Twitter, color: "#1DA1F2" },
+  { name: "YouTube", href: "https://www.youtube.com/@smilesworldpune", icon: Youtube, color: "#FF0000" },
+  // { name: "LinkedIn", href: "#", icon: Linkedin, color: "#0A66C2" },
 ];
 
 export function Footer() {
