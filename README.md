@@ -13,7 +13,7 @@ While specific details regarding this project have been kept confidential, its c
 ## 📄 Project Completion Letter
 
 <p align="center">
-  <img src="docs/documentation-preview.png" alt="Smiles-World Project Completion Letter" width="800">
+  <img src="docs/Completeion_letter.png" alt="Smiles-World Project Completion Letter" width="800">
 </p>
 
 > *This project completion letter is provided to verify the authenticity of the project and its successful completion.*
